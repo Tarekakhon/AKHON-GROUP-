@@ -6,54 +6,45 @@
     <title>MD TAREK AKHON | Akhon Group</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --p-blue: #002D62; --gold: #D4AF37; }
+        :root { --p-blue: #002D62; --gold: #D4AF37; --green: #25D366; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f0f2f5; text-align: center; color: #333; }
         header { background: var(--p-blue); padding: 40px 20px 70px; color: white; }
-        .logo-img { width: 120px; height: auto; border-radius: 15px; border: 3px solid var(--gold); background: white; padding: 5px; }
+        .logo-img { width: 100px; height: auto; border-radius: 10px; border: 2px solid var(--gold); background: white; padding: 5px; }
         .card { max-width: 500px; margin: -50px auto 30px; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h1 { color: var(--p-blue); margin: 10px 0; font-size: 22px; }
         .price-box { background: #f9f9f9; padding: 15px; border-radius: 15px; margin-top: 20px; text-align: left; }
-        .price-item { display: flex; justify-content: space-between; border-bottom: 1px dashed #ddd; padding: 8px 0; font-size: 14px; }
-        .price-item:last-child { border: none; }
-        .price-name { font-weight: bold; color: var(--p-blue); }
-        .price-val { color: #d32f2f; font-weight: bold; }
-        .btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .btn { padding: 12px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .price-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #ddd; padding: 10px 0; font-size: 13px; }
+        .order-wa { background: var(--green); color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; font-size: 11px; font-weight: bold; }
+        .cod-tag { background: #e8f5e9; color: #2e7d32; padding: 10px; border-radius: 10px; font-size: 14px; font-weight: bold; margin-top: 15px; border: 1px solid #2e7d32; }
+        .btn { display: block; padding: 12px; border-radius: 50px; text-decoration: none; font-weight: bold; margin-top: 10px; font-size: 14px; }
         .btn-call { background: var(--p-blue); color: white; }
         .btn-map { background: #34a853; color: white; }
-        .social-links { margin-top: 15px; }
-        .social-links a { font-size: 30px; margin: 0 10px; color: var(--p-blue); }
     </style>
 </head>
 <body>
     <header>
         <img src="logo.jpg" alt="Logo" class="logo-img">
-        <div style="margin-top: 10px; color: var(--gold); font-weight: bold; letter-spacing: 1px;">AKHON GROUP</div>
+        <div style="margin-top: 10px; color: var(--gold); font-weight: bold;">AKHON GROUP</div>
     </header>
     <div class="card">
-        <h1>MD TAREK AKHON</h1>
-        <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Founder & CEO, Akhon Group</p>
-        
-        <div class="social-links">
-            <a href="https://www.facebook.com/profile.php?id=61585993592145" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://wa.me/+971503974296" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        </div>
+        <h2 style="margin:0; color:var(--p-blue);">MD TAREK AKHON</h2>
+        <p style="color: #666; font-size: 13px;">Founder & CEO, Akhon Group</p>
+
+        <div class="cod-tag"><i class="fas fa-truck"></i> Cash on Delivery Available in UAE</div>
 
         <div class="price-box">
-            <h3 style="text-align: center; margin-top: 0; color: var(--p-blue); border-bottom: 2px solid var(--gold); padding-bottom: 5px;">আমাদের পণ্যের তালিকা</h3>
-            <div class="price-item"><span class="price-name">Pakistani Threepiece (1 Box)</span><span class="price-val">400 AED</span></div>
-            <div class="price-item"><span class="price-name">Indian Threepiece</span><span class="price-val">380 AED</span></div>
-            <div class="price-item"><span class="price-name">Manchester Blue (1 Cut)</span><span class="price-val">22 AED</span></div>
-            <div class="price-item"><span class="price-name">Manchester Queen (1 Cut)</span><span class="price-val">22 AED</span></div>
+            <h4 style="margin:0 0 10px; color:var(--p-blue); border-bottom: 2px solid var(--gold);">Clothing Items</h4>
+            <div class="price-item"><span>Pakistani Threepiece (Box) - 400 AED</span> <a href="https://wa.me/971503974298?text=I want to order Pakistani Threepiece" class="order-wa">Order</a></div>
+            <div class="price-item"><span>Indian Threepiece - 380 AED</span> <a href="https://wa.me/971503974298?text=I want to order Indian Threepiece" class="order-wa">Order</a></div>
+            <div class="price-item"><span>Manchester Blue/Queen - 22 AED</span> <a href="https://wa.me/971503974298?text=I want to order Manchester Fabric" class="order-wa">Order</a></div>
+
+            <h4 style="margin:15px 0 10px; color:var(--p-blue); border-bottom: 2px solid var(--gold);">Premium Cigarettes (Carton)</h4>
+            <div class="price-item"><span>Marlboro Gold/Red - 220 AED</span> <a href="https://wa.me/971503974298?text=I want to order Marlboro Carton" class="order-wa">Order</a></div>
+            <div class="price-item"><span>Dunhill International - 240 AED</span> <a href="https://wa.me/971503974298?text=I want to order Dunhill Carton" class="order-wa">Order</a></div>
+            <div class="price-item"><span>Parliament Night Blue - 230 AED</span> <a href="https://wa.me/971503974298?text=I want to order Parliament Carton" class="order-wa">Order</a></div>
         </div>
 
-        <div class="btn-container">
-            <a href="tel:+9710503974296" class="btn btn-call"><i class="fas fa-phone"></i> কল করুন: +9710503974296</a>
-            <a href="https://www.google.com/maps?q=Sharjah+Industrial+Area+11" target="_blank" class="btn btn-map"><i class="fas fa-map-marker-alt"></i> গুগল ম্যাপ লোকেশন</a>
-        </div>
+        <a href="tel:0503974298" class="btn btn-call"><i class="fas fa-phone"></i> Call for Bulk Order</a>
+        <a href="https://www.google.com/maps?q=Sharjah+Industrial+Area+11" target="_blank" class="btn btn-map"><i class="fas fa-map-marker-alt"></i> Sharjah Industrial 11</a>
     </div>
-    <footer style="padding-bottom: 20px; color: #999; font-size: 11px;">
-        &copy; 2026 MD TAREK AKHON | All Rights Reserved.
-    </footer>
 </body>
 </html>
