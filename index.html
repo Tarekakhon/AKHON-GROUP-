@@ -3,105 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP - Ultimate Collection</title>
+    <title>AKHON SHOP - Live Search & Products</title>
     <style>
         body { font-family: 'Roboto', sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-        .header { background-color: #f57224; color: white; padding: 12px; position: sticky; top: 0; z-index: 1000; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .search-container { background: white; border-radius: 20px; padding: 8px 15px; margin: 10px; display: flex; align-items: center; color: #999; font-size: 14px; }
+        .header { background-color: #f57224; color: white; padding: 12px; position: sticky; top: 0; z-index: 1000; text-align: center; }
+        
+        /* সার্চবার ডিজাইন */
+        .search-container { background: white; border-radius: 20px; padding: 5px 15px; margin: 10px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .search-container input { border: none; outline: none; width: 100%; padding: 8px; font-size: 14px; }
+
         .container { padding: 10px; }
-        .section-title { font-size: 18px; font-weight: bold; margin: 25px 0 12px; color: #222; border-left: 6px solid #f57224; padding-left: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .view-all { font-size: 12px; color: #f57224; font-weight: normal; }
+        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #222; border-left: 5px solid #f57224; padding-left: 10px; }
+        
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; position: relative; }
-        .badge { position: absolute; top: 10px; left: 10px; background: #ff4747; color: white; font-size: 10px; padding: 3px 8px; border-radius: 5px; font-weight: bold; z-index: 1; }
-        .product-image { width: 100%; height: 220px; object-fit: cover; background-color: #f9f9f9; }
-        .product-info { padding: 12px; }
-        .product-name { font-size: 13px; font-weight: 500; color: #333; height: 34px; overflow: hidden; margin: 0 0 6px; line-height: 1.3; }
-        .rating { color: #ffc107; font-size: 11px; margin-bottom: 4px; }
-        .shipping { font-size: 11px; color: #28a745; font-weight: bold; margin-bottom: 8px; display: flex; align-items: center; gap: 3px; }
-        .price-row { display: flex; align-items: center; gap: 6px; }
-        .current-price { color: #f57224; font-size: 17px; font-weight: bold; }
-        .old-price { color: #999; text-decoration: line-through; font-size: 12px; }
-        .buy-btn { background-color: #f57224; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; transition: 0.3s; font-size: 14px; }
-        .buy-btn:active { background-color: #d45d1a; transform: scale(0.98); }
+        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: 0.3s; }
+        .product-card.hidden { display: none; } /* সার্চের জন্য */
+
+        .product-image { width: 100%; height: 200px; object-fit: cover; background-color: #eee; }
+        .product-info { padding: 10px; }
+        .product-name { font-size: 13px; font-weight: 500; color: #333; height: 34px; overflow: hidden; margin-bottom: 5px; }
+        .price-row { display: flex; align-items: center; gap: 5px; }
+        .current-price { color: #f57224; font-size: 16px; font-weight: bold; }
+        .old-price { color: #999; text-decoration: line-through; font-size: 11px; }
+        .buy-btn { background-color: #f57224; color: white; border: none; width: 100%; padding: 10px; border-radius: 6px; font-weight: bold; margin-top: 10px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div style="font-size: 22px; font-weight: bold; letter-spacing: 1px;">AKHON SHOP</div>
-    <div class="search-container">🔍 Search 50,000+ items on Akhon Shop</div>
+    <div style="font-size: 20px; font-weight: bold;">AKHON SHOP 🛒</div>
+    <div class="search-container">
+        🔍 <input type="text" id="searchInput" onkeyup="searchProducts()" placeholder="Search Pakistani dresses, shoes...">
+    </div>
 </div>
 
 <div class="container">
     
-    <div class="section-title">Pakistani Ladies Dresses <span class="view-all">Top 100+</span></div>
-    <div class="product-grid" id="pak-grid"></div>
-
-    <div class="section-title">Premium Footwear <span class="view-all">Sale Info</span></div>
-    <div class="product-grid" id="shoe-grid"></div>
-
-    <div class="section-title">Fashion Accessories <span class="view-all">Trending</span></div>
-    <div class="product-grid" id="acc-grid"></div>
+    <div class="section-title">All Products</div>
+    <div class="product-grid" id="main-grid">
+        </div>
 
 </div>
 
 <script>
     const wa = "9710503974296";
 
-    function getCard(name, price, old, img, badge) {
-        return `
-        <div class="product-card">
-            ${badge ? `<div class="badge">${badge}</div>` : ''}
-            <img class="product-image" src="${img}" alt="${name}">
-            <div class="product-info">
-                <p class="product-name">${name}</p>
-                <div class="rating">★★★★★ (2.5k+ Sold)</div>
-                <div class="shipping">⚡ Free Shipping</div>
-                <div class="price-row">
-                    <span class="current-price">${price} AED</span>
-                    <span class="old-price">${old} AED</span>
-                </div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/${wa}?text=Order: ${name}'">Buy Now</button>
-            </div>
-        </div>`;
+    // সকল পণ্যের ডাটা (এখানে আরও অ্যাড করতে পারবেন)
+    const products = [
+        {name: "Pakistani Lawn 3-Piece", p: 155, o: 250, i: "https://m.media-amazon.com/images/I/71N8N4mS+LL._AC_UY1100_.jpg"},
+        {name: "Maria B Silk Edition", p: 210, o: 380, i: "https://m.media-amazon.com/images/I/61I07yC5+0L._AC_UY1100_.jpg"},
+        {name: "Premium Sports Sneakers", p: 95, o: 180, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500"},
+        {name: "Luxury Ladies Handbag", p: 120, o: 220, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500"},
+        {name: "Ray-Ban Polarized Glass", p: 45, o: 99, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500"},
+        {name: "Cotton Silk Party Wear", p: 220, o: 350, i: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500"},
+        {name: "Men's Slim Wallet", p: 35, o: 70, i: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500"},
+        {name: "Instant Mini Camera", p: 299, o: 450, i: "https://images.unsplash.com/photo-1526170315873-3a92b4880d01?w=500"}
+    ];
+
+    const grid = document.getElementById('main-grid');
+
+    // প্রোডাক্ট রেন্ডার করার ফাংশন
+    function displayProducts() {
+        products.forEach(product => {
+            grid.innerHTML += `
+                <div class="product-card">
+                    <img class="product-image" src="${product.i}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/200?text=No+Image'">
+                    <div class="product-info">
+                        <p class="product-name">${product.name}</p>
+                        <div class="price-row">
+                            <span class="current-price">${product.p} AED</span>
+                            <span class="old-price">${product.o} AED</span>
+                        </div>
+                        <button class="buy-btn" onclick="location.href='https://wa.me/${wa}?text=Order: ${product.name}'">Buy Now</button>
+                    </div>
+                </div>`;
+        });
     }
 
-    // পাকিস্তানি ড্রেস ডাটা
-    const pakData = [
-        {n: "Lawn Cotton 3-Piece", p: 155, o: 250, i: "https://m.media-amazon.com/images/I/71N8N4mS+LL._AC_UY1100_.jpg", b: "70% OFF"},
-        {n: "Maria B Silk Edition", p: 210, o: 380, i: "https://m.media-amazon.com/images/I/61I07yC5+0L._AC_UY1100_.jpg", b: "BESTSELLER"},
-        {n: "Aghanoor Party Wear", p: 195, o: 320, i: "https://m.media-amazon.com/images/I/61B6-C5pA4L._AC_UY1100_.jpg", b: "HOT"},
-        {n: "Sana Safinaz Luxury", p: 240, o: 450, i: "https://m.media-amazon.com/images/I/71r99E2nUWL._AC_UY1100_.jpg", b: "NEW"},
-        {n: "Khaadi Summer Lawn", p: 130, o: 200, i: "https://m.media-amazon.com/images/I/71uV8I6WreL._AC_UY1100_.jpg", b: "SALE"},
-        {n: "Designer Chiffon Set", p: 280, o: 500, i: "https://m.media-amazon.com/images/I/81hI+L-XmML._AC_UY1100_.jpg", b: "PREMIUM"}
-    ];
+    // সার্চবার কার্যকর করার ফাংশন
+    function searchProducts() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('product-card');
 
-    // জুতা ডাটা
-    const shoeData = [
-        {n: "Running Sports Shoes", p: 95, o: 180, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", b: "FLASH SALE"},
-        {n: "Classic White Sneakers", p: 75, o: 150, i: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500", b: "TRENDING"},
-        {n: "Formal Leather Shoes", p: 145, o: 280, i: "https://images.unsplash.com/photo-1449241595218-8480286115c0?w=500", b: "TOP PICK"},
-        {n: "Air Comfort Joggers", p: 110, o: 220, i: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500", b: "60% OFF"}
-    ];
+        for (let i = 0; i < cards.length; i++) {
+            let name = cards[i].getElementsByClassName('product-name')[0].innerText.toLowerCase();
+            if (name.includes(input)) {
+                cards[i].classList.remove('hidden');
+            } else {
+                cards[i].classList.add('hidden');
+            }
+        }
+    }
 
-    // এক্সেসরিজ ডাটা
-    const accData = [
-        {n: "Luxury Handbag Red", p: 125, o: 220, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500", b: "LIMITED"},
-        {n: "Ray-Ban Style Glass", p: 45, o: 95, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500", b: "HOT"},
-        {n: "Men's Slim Wallet", p: 35, o: 70, i: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=500", b: "DEAL"},
-        {n: "Women's Golden Watch", p: 180, o: 350, i: "https://images.unsplash.com/photo-1524333865980-6019170f7730?w=500", b: "SPECIAL"}
-    ];
-
-    // রেন্ডার করা
-    const r = (id, data) => {
-        const el = document.getElementById(id);
-        data.forEach(x => el.innerHTML += getCard(x.n, x.p, x.o, x.i, x.b));
-    };
-
-    r('pak-grid', pakData);
-    r('shoe-grid', shoeData);
-    r('acc-grid', accData);
+    displayProducts();
 </script>
 
 </body>
