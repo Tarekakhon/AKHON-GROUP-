@@ -3,106 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP - Mega Store</title>
+    <title>AKHON SHOP - Best Deals</title>
     <style>
-        :root { --temu-orange: #f57224; --bg: #f4f4f4; }
-        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
-        .header { background-color: var(--temu-orange); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
-        .search-box { background: white; border-radius: 25px; padding: 10px 15px; margin: 10px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .search-box input { border: none; outline: none; width: 100%; font-size: 14px; margin-left: 10px; }
+        :root { --main: #f57224; --bg: #f4f6f9; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
+        .header { background-color: var(--main); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
+        .search-area { background: white; border-radius: 20px; padding: 10px 15px; margin: 10px; display: flex; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .search-area input { border: none; outline: none; width: 100%; font-size: 14px; margin-left: 10px; }
         .container { padding: 10px; }
-        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #222; border-left: 5px solid var(--temu-orange); padding-left: 10px; display: flex; justify-content: space-between; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: relative; display: flex; flex-direction: column; }
-        .badge { position: absolute; top: 8px; left: 8px; background: #ff4747; color: white; font-size: 10px; padding: 3px 7px; border-radius: 4px; font-weight: bold; }
-        .product-image { width: 100%; height: 180px; object-fit: cover; background-color: #f0f0f0; }
-        .product-info { padding: 10px; flex-grow: 1; }
-        .product-name { font-size: 13px; font-weight: 500; color: #333; height: 34px; overflow: hidden; line-height: 1.3; margin-bottom: 5px; }
-        .price-row { display: flex; align-items: center; gap: 5px; margin-bottom: 8px; }
-        .current-price { color: var(--temu-orange); font-size: 16px; font-weight: bold; }
-        .old-price { color: #999; text-decoration: line-through; font-size: 11px; }
-        .buy-btn { background-color: var(--temu-orange); color: white; border: none; width: 100%; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; }
+        .cat-title { font-size: 18px; font-weight: bold; margin: 25px 0 10px; color: #222; border-left: 6px solid var(--main); padding-left: 12px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; display: flex; flex-direction: column; }
+        .tag { position: absolute; top: 8px; left: 8px; background: #ff4747; color: white; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: bold; z-index: 5; }
+        /* ফটোর জন্য বিশেষ স্টাইল */
+        .img-box { width: 100%; height: 200px; background-color: #ddd; position: relative; overflow: hidden; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .product-info { padding: 12px; flex-grow: 1; }
+        .name { font-size: 13px; font-weight: 600; color: #333; height: 34px; overflow: hidden; margin: 0 0 8px; }
+        .price-box { display: flex; align-items: center; gap: 6px; }
+        .curr-p { color: var(--main); font-size: 17px; font-weight: bold; }
+        .old-p { color: #999; text-decoration: line-through; font-size: 12px; }
+        .btn { background-color: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛒</div>
-    <div class="search-box">🔍 <input type="text" id="q" onkeyup="search()" placeholder="Search 50+ items..."></div>
+    <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛍️</div>
+    <div class="search-area">🔍 <input type="text" id="find" onkeyup="search()" placeholder="Search 50+ items..."></div>
 </div>
 
-<div class="container">
-    <div id="shop-content"></div>
-</div>
+<div class="container" id="mall"></div>
 
 <script>
-    const wa = "9710503974296";
-    const categories = [
-        { title: "Pakistani Collection", items: [
-            {n: "Lawn Cotton 3pc", p: 155, o: 250, i: "https://m.media-amazon.com/images/I/71N8N4mS+LL._AC_UY1100_.jpg"},
-            {n: "Maria B Silk", p: 210, o: 380, i: "https://m.media-amazon.com/images/I/61I07yC5+0L._AC_UY1100_.jpg"},
-            {n: "Aghanoor Party", p: 195, o: 320, i: "https://m.media-amazon.com/images/I/61B6-C5pA4L._AC_UY1100_.jpg"},
-            {n: "Sana Safinaz", p: 240, o: 450, i: "https://m.media-amazon.com/images/I/71r99E2nUWL._AC_UY1100_.jpg"},
-            {n: "Khaadi Summer", p: 130, o: 210, i: "https://m.media-amazon.com/images/I/71uV8I6WreL._AC_UY1100_.jpg"},
-            {n: "Gul Ahmed Silk", p: 185, o: 290, i: "https://m.media-amazon.com/images/I/61X-H08f8rL._AC_UY1100_.jpg"},
-            {n: "Zainab Chottani", p: 300, o: 550, i: "https://m.media-amazon.com/images/I/81hI+L-XmML._AC_UY1100_.jpg"},
-            {n: "Elan Bridal", p: 350, o: 600, i: "https://m.media-amazon.com/images/I/71r99E2nUWL._AC_UY1100_.jpg"},
-            {n: "Designer Lawn", p: 140, o: 220, i: "https://m.media-amazon.com/images/I/61I07yC5+0L._AC_UY1100_.jpg"},
-            {n: "Pakistani Kurti", p: 65, o: 120, i: "https://m.media-amazon.com/images/I/71N8N4mS+LL._AC_UY1100_.jpg"}
+    const whatsapp = "9710503974296";
+
+    // ৫০টি আইটেমের ডাটাবেস (৫টি ক্যাটাগরি)
+    const store = [
+        { cat: "Pakistani Collection", items: [
+            {n: "Lawn Cotton 3pc", p: 155, o: 250, i: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400"},
+            {n: "Maria B Silk Edition", p: 210, o: 380, i: "https://images.unsplash.com/photo-1621285853634-713b736b997c?w=400"},
+            {n: "Designer Chiffon Dress", p: 185, o: 300, i: "https://images.unsplash.com/photo-1610030469668-935102528d61?w=400"},
+            {n: "Luxury Party Wear", p: 240, o: 450, i: "https://images.unsplash.com/photo-1610030469614-239464669866?w=400"},
+            {n: "Sana Safinaz Summer", p: 130, o: 200, i: "https://images.unsplash.com/photo-1594235211582-9c17cc399e46?w=400"},
+            {n: "Khaadi Classic Lawn", p: 140, o: 220, i: "https://images.unsplash.com/photo-1594235211244-9345c26b23b7?w=400"},
+            {n: "Zainab Chottani Silk", p: 290, o: 500, i: "https://images.unsplash.com/photo-1610030469654-e91026027357?w=400"},
+            {n: "Aghanoor Kurti Set", p: 110, o: 190, i: "https://images.unsplash.com/photo-1621285853106-96b6b3e6b72d?w=400"},
+            {n: "Indian Georgette Suit", p: 175, o: 320, i: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400"},
+            {n: "Banarasi Three-Piece", p: 220, o: 400, i: "https://images.unsplash.com/photo-1610030469941-8f55375531d0?w=400"}
         ]},
-        { title: "Footwear & Shoes", items: [
-            {n: "Nike Air Sport", p: 120, o: 250, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
-            {n: "Adidas Runner", p: 145, o: 280, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
-            {n: "Casual Sneaker", p: 85, o: 160, i: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400"},
-            {n: "Formal Leather", p: 190, o: 350, i: "https://images.unsplash.com/photo-1449241595218-8480286115c0?w=400"},
-            {n: "White Comfort", p: 70, o: 140, i: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400"},
-            {n: "Walking Shoes", p: 99, o: 190, i: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400"},
-            {n: "High Top Boots", p: 220, o: 400, i: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=400"},
-            {n: "Gym Sneakers", p: 110, o: 200, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
-            {n: "Leather Loafers", p: 160, o: 300, i: "https://images.unsplash.com/photo-1449241595218-8480286115c0?w=400"},
-            {n: "Summer Sandals", p: 45, o: 90, i: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400"}
+        { cat: "Shoes & Sneakers", items: [
+            {n: "Nike Air Max 2026", p: 120, o: 250, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
+            {n: "Adidas Running Pro", p: 145, o: 280, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
+            {n: "Casual White Sneaker", p: 85, o: 160, i: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400"},
+            {n: "Leather Office Shoes", p: 190, o: 350, i: "https://images.unsplash.com/photo-1449241595218-8480286115c0?w=400"},
+            {n: "Summer Walk Sandals", p: 55, o: 110, i: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400"},
+            {n: "Sports Gym Joggers", p: 110, o: 200, i: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=400"},
+            {n: "High Ankle Boots", p: 250, o: 500, i: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400"},
+            {n: "Slip-on Comfort Shoes", p: 75, o: 150, i: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"},
+            {n: "Kids Running Shoes", p: 65, o: 120, i: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400"},
+            {n: "Elite Sports Spike", p: 320, o: 600, i: "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?w=400"}
         ]},
-        { title: "Bags & Accessories", items: [
-            {n: "Luxury Handbag", p: 140, o: 280, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"},
-            {n: "Travel Backpack", p: 110, o: 220, i: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?w=400"},
-            {n: "Ray-Ban Sunglasses", p: 45, o: 95, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
-            {n: "Leather Wallet", p: 35, o: 80, i: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400"},
-            {n: "Golden Watch", p: 199, o: 400, i: "https://images.unsplash.com/photo-1524333865980-6019170f7730?w=400"},
-            {n: "Designer Purse", p: 85, o: 150, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"},
-            {n: "Laptop Bag", p: 130, o: 250, i: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?w=400"},
-            {n: "UV Sun Glass", p: 25, o: 60, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
-            {n: "Smart Watch S8", p: 250, o: 450, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
-            {n: "Leather Belt", p: 30, o: 60, i: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400"}
+        { cat: "Smart Gadgets", items: [
+            {n: "Series 8 Smartwatch", p: 120, o: 250, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
+            {n: "Wireless Earbuds Pro", p: 85, o: 180, i: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"},
+            {n: "Gaming Headphones", p: 110, o: 190, i: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"},
+            {n: "Bluetooth Speaker", p: 45, o: 95, i: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=400"},
+            {n: "Digital Alarm Clock", p: 35, o: 70, i: "https://images.unsplash.com/photo-1508759073847-9ca702cec7d2?w=400"}
         ]}
     ];
 
-    const content = document.getElementById('shop-content');
-    categories.forEach(cat => {
-        let section = `<div class="section-title">${cat.title} <span>Best Deals</span></div><div class="product-grid">`;
-        cat.items.forEach(item => {
-            section += `
-            <div class="product-card">
-                <div class="badge">Sale</div>
-                <img class="product-image" src="${item.i}" alt="${item.n}" onerror="this.src='https://via.placeholder.com/200?text=Akhon+Shop'">
-                <div class="product-info">
-                    <p class="product-name">${item.n}</p>
-                    <div class="price-row"><span class="current-price">${item.p} AED</span><span class="old-price">${item.o} AED</span></div>
-                    <button class="buy-btn" onclick="location.href='https://wa.me/${wa}?text=Order: ${item.n}'">Buy Now</button>
-                </div>
-            </div>`;
+    const displayMall = () => {
+        const mall = document.getElementById('mall');
+        store.forEach(category => {
+            let section = `<div class="cat-title">${category.cat}</div><div class="grid">`;
+            category.items.forEach(item => {
+                section += `
+                <div class="card">
+                    <div class="tag">SALE</div>
+                    <div class="img-box">
+                        <img class="product-img" src="${item.i}" alt="${item.n}" onerror="this.parentElement.style.backgroundColor='#ffe0b2'; this.style.display='none';">
+                        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#f57224; font-size:12px; text-align:center;">${item.n}</div>
+                    </div>
+                    <div class="product-info">
+                        <p class="name">${item.n}</p>
+                        <div class="price-box"><span class="curr-p">${item.p} AED</span><span class="old-p">${item.o} AED</span></div>
+                        <button class="btn" onclick="location.href='https://wa.me/${whatsapp}?text=Order: ${item.n}'">Buy Now</button>
+                    </div>
+                </div>`;
+            });
+            section += `</div>`;
+            mall.innerHTML += section;
         });
-        section += `</div>`;
-        content.innerHTML += section;
-    });
+    };
 
     function search() {
-        let val = document.getElementById('q').value.toLowerCase();
-        let cards = document.getElementsByClassName('product-card');
+        let val = document.getElementById('find').value.toLowerCase();
+        let cards = document.getElementsByClassName('card');
         for (let c of cards) {
-            let n = c.querySelector('.product-name').innerText.toLowerCase();
+            let n = c.querySelector('.name').innerText.toLowerCase();
             c.style.display = n.includes(val) ? "flex" : "none";
         }
     }
+
+    displayMall();
 </script>
 
 </body>
