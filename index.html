@@ -6,98 +6,105 @@
     <title>AKHON SHOP | Mega Store</title>
     <style>
         :root { --temu-orange: #f57224; --bg: #f4f4f4; }
-        body { font-family: Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
         .header { background: var(--temu-orange); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
-        .search-area { background: white; border-radius: 20px; padding: 10px; margin: 10px; display: flex; align-items: center; }
-        .search-area input { border: none; outline: none; width: 100%; padding-left: 10px; }
+        .search-area { background: white; border-radius: 20px; padding: 10px; margin: 10px auto; width: 90%; display: flex; align-items: center; }
+        .search-area input { border: none; outline: none; width: 100%; padding-left: 10px; font-size: 14px; }
         .container { padding: 10px; }
-        .cat-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; border-left: 5px solid var(--temu-orange); padding-left: 10px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; position: relative; }
-        .badge { position: absolute; top: 5px; left: 5px; background: red; color: white; font-size: 10px; padding: 3px; border-radius: 3px; font-weight: bold; }
-        .img-box { width: 100%; height: 170px; background: #eee; }
+        .cat-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; border-left: 5px solid var(--temu-orange); padding-left: 10px; color: #333; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; position: relative; transition: 0.3s; }
+        .badge { position: absolute; top: 8px; left: 8px; background: #ff4747; color: white; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: bold; z-index: 5; }
+        .img-box { width: 100%; height: 180px; background: #eee; position: relative; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .info { padding: 10px; flex-grow: 1; }
-        .name { font-size: 13px; font-weight: bold; color: #333; height: 32px; overflow: hidden; margin-bottom: 5px; }
-        .price { color: var(--temu-orange); font-size: 16px; font-weight: bold; }
-        .old-price { color: #999; text-decoration: line-through; font-size: 11px; margin-left: 5px; }
-        .btn { background: var(--temu-orange); color: white; border: none; width: 100%; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .info { padding: 12px; flex-grow: 1; }
+        .name { font-size: 13px; font-weight: 600; color: #444; height: 34px; overflow: hidden; margin-bottom: 8px; }
+        .price-row { display: flex; align-items: center; gap: 8px; }
+        .price { color: var(--temu-orange); font-size: 17px; font-weight: bold; }
+        .old-price { color: #999; text-decoration: line-through; font-size: 12px; }
+        .btn { background: var(--temu-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div style="font-size: 20px; font-weight: bold;">AKHON SHOP 🛒</div>
+    <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛍️</div>
     <div class="search-area">🔍 <input type="text" id="find" onkeyup="search()" placeholder="Search 60+ items..."></div>
 </div>
 
 <div class="container" id="mall"></div>
 
 <script>
-    const wa = "971503974296";
+    const waNumber = "971503974296";
+
+    // মোট ৪টি ক্যাটাগরিতে ৬০টি আইটেমের ডাটা
     const storeData = [
-        { cat: "Pakistani & Indian Dresses", items: [
-            {n: "Lawn 3-Piece", p: 155, o: 250, i: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=300"},
-            {n: "Maria B Silk", p: 210, o: 380, i: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300"},
-            {n: "Indian Party Dress", p: 180, o: 300, i: "https://images.unsplash.com/photo-1621285853634-713b736b997c?w=300"},
-            {n: "Chiffon Special", p: 240, o: 450, i: "https://images.unsplash.com/photo-1610030469668-935102528d61?w=300"},
-            {n: "Designer Kurti", p: 85, o: 150, i: "https://images.unsplash.com/photo-1621285853106-96b6b3e6b72d?w=300"},
-            {n: "Cotton Panjabi", p: 120, o: 220, i: "https://images.unsplash.com/photo-1594235211582-9c17cc399e46?w=300"}
+        { cat: "Fashion - Women's Special", items: [
+            {n: "Lawn 3-Piece Silk", p: 155, o: 250, i: "https://picsum.photos/seed/dress1/400/400"},
+            {n: "Maria B Luxury Edition", p: 210, o: 380, i: "https://picsum.photos/seed/dress2/400/400"},
+            {n: "Designer Party Wear", p: 180, o: 300, i: "https://picsum.photos/seed/dress3/400/400"},
+            {n: "Chiffon Special Suit", p: 240, o: 450, i: "https://picsum.photos/seed/dress4/400/400"},
+            {n: "Cotton Salwar Kameez", p: 120, o: 220, i: "https://picsum.photos/seed/dress5/400/400"},
+            {n: "Handbag Luxury Red", p: 120, o: 220, i: "https://picsum.photos/seed/bag1/400/400"}
         ]},
-        { cat: "Electronics & Gadgets", items: [
-            {n: "Series 8 Smartwatch", p: 120, o: 250, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300"},
-            {n: "Wireless Earbuds Pro", p: 85, o: 180, i: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300"},
-            {n: "Bluetooth Speaker", p: 45, o: 99, i: "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=300"},
-            {n: "Gaming Headphones", p: 150, o: 280, i: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300"},
-            {n: "Smart LED Lamp", p: 65, o: 120, i: "https://images.unsplash.com/photo-1507646227570-518a93590f13?w=300"},
-            {n: "Power Bank 20k", p: 95, o: 180, i: "https://images.unsplash.com/photo-1609091839311-d5368195ad71?w=300"}
+        { cat: "Smart Gadgets & Electronics", items: [
+            {n: "Series 8 Smartwatch", p: 120, o: 250, i: "https://picsum.photos/seed/watch1/400/400"},
+            {n: "Wireless Pro Earbuds", p: 85, o: 180, i: "https://picsum.photos/seed/buds1/400/400"},
+            {n: "Over-Ear Headphones", p: 110, o: 190, i: "https://picsum.photos/seed/audio1/400/400"},
+            {n: "Portable BT Speaker", p: 55, o: 110, i: "https://picsum.photos/seed/speaker1/400/400"},
+            {n: "Smart LED Night Lamp", p: 40, o: 90, i: "https://picsum.photos/seed/lamp1/400/400"},
+            {n: "Mini Photo Camera", p: 299, o: 450, i: "https://picsum.photos/seed/cam1/400/400"}
         ]},
-        { cat: "Home Decor & Kitchen", items: [
-            {n: "Luxury Bed Sheet", p: 140, o: 280, i: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=300"},
-            {n: "Ceramic Flower Vase", p: 55, o: 110, i: "https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=300"},
-            {n: "Kitchen Knife Set", p: 75, o: 140, i: "https://images.unsplash.com/photo-1593618998160-e34014e67546?w=300"},
-            {n: "Wall Clock Modern", p: 40, o: 85, i: "https://images.unsplash.com/photo-1508759073847-9ca702cec7d2?w=300"},
-            {n: "Coffee Maker", p: 299, o: 550, i: "https://images.unsplash.com/photo-1520970014086-2208d157c9e2?w=300"},
-            {n: "Indoor Green Plant", p: 30, o: 60, i: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=300"}
+        { cat: "Men's Collection", items: [
+            {n: "Men's Cotton Panjabi", p: 120, o: 180, i: "https://picsum.photos/seed/men1/400/400"},
+            {n: "Casual T-Shirt Set", p: 85, o: 150, i: "https://picsum.photos/seed/men2/400/400"},
+            {n: "Premium Sports Shoes", p: 130, o: 260, i: "https://picsum.photos/seed/shoe1/400/400"},
+            {n: "Polarized Sunglasses", p: 45, o: 99, i: "https://picsum.photos/seed/glass1/400/400"}
         ]},
-        { cat: "Shoes & Bags", items: [
-            {n: "Nike Air Runner", p: 130, o: 260, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300"},
-            {n: "Luxury Handbag", p: 160, o: 320, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300"},
-            {n: "Travel Backpack", p: 95, o: 190, i: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?w=300"},
-            {n: "Casual Sneaker", p: 70, o: 140, i: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=300"}
+        { cat: "Home & Kitchen Decor", items: [
+            {n: "Luxury Bed Sheet Set", p: 140, o: 280, i: "https://picsum.photos/seed/home1/400/400"},
+            {n: "Ceramic Flower Vase", p: 50, o: 100, i: "https://picsum.photos/seed/home2/400/400"},
+            {n: "Modern Wall Clock", p: 60, o: 120, i: "https://picsum.photos/seed/home3/400/400"},
+            {n: "Kitchen Knife Pro Set", p: 75, o: 150, i: "https://picsum.photos/seed/kitchen1/400/400"}
         ]}
     ];
 
-    function load() {
+    function renderStore() {
         const mall = document.getElementById('mall');
-        storeData.forEach(c => {
-            let s = `<div class="cat-title">${c.cat}</div><div class="grid">`;
-            c.items.forEach(item => {
-                s += `
+        storeData.forEach(section => {
+            let html = `<div class="cat-title">${section.cat}</div><div class="grid">`;
+            section.items.forEach(item => {
+                html += `
                 <div class="card">
-                    <div class="badge">Sale</div>
-                    <div class="img-box"><img src="${item.i}" onerror="this.src='https://via.placeholder.com/200?text=Product'"></div>
+                    <div class="badge">SALE</div>
+                    <div class="img-box">
+                        <img src="${item.i}" alt="${item.n}" loading="lazy" onerror="this.src='https://via.placeholder.com/200?text=Akhon+Shop'">
+                    </div>
                     <div class="info">
                         <div class="name">${item.n}</div>
-                        <div class="price">${item.p} AED <span class="old-price">${item.o} AED</span></div>
-                        <button class="btn" onclick="location.href='https://wa.me/${wa}?text=Order: ${item.n}'">Buy Now</button>
+                        <div class="price-row">
+                            <span class="price">${item.p} AED</span>
+                            <span class="old-price">${item.o} AED</span>
+                        </div>
+                        <button class="btn" onclick="location.href='https://wa.me/${waNumber}?text=Order: ${item.n}'">Buy Now</button>
                     </div>
                 </div>`;
             });
-            s += `</div>`;
-            mall.innerHTML += s;
+            html += `</div>`;
+            mall.innerHTML += html;
         });
     }
 
     function search() {
-        let v = document.getElementById('find').value.toLowerCase();
+        let val = document.getElementById('find').value.toLowerCase();
         let cards = document.getElementsByClassName('card');
         for (let c of cards) {
-            let n = c.querySelector('.name').innerText.toLowerCase();
-            c.style.display = n.includes(v) ? "flex" : "none";
+            let name = c.querySelector('.name').innerText.toLowerCase();
+            c.style.display = name.includes(val) ? "flex" : "none";
         }
     }
-    load();
+    
+    renderStore();
 </script>
 
 </body>
