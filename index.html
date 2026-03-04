@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP | Guaranteed Photos</title>
+    <title>AKHON SHOP | Budget Deals</title>
     <style>
         :root { --main: #f57224; --bg: #f4f4f4; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
@@ -12,48 +12,53 @@
         .search-box input { border: none; outline: none; width: 100%; font-size: 14px; }
         .container { padding: 12px; max-width: 600px; margin: auto; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; }
-        .img-area { width: 100%; height: 200px; background: #eee; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .img-area { width: 100%; height: 200px; background: #eee; overflow: hidden; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; }
-        .details { padding: 12px; }
-        .p-name { font-size: 14px; font-weight: 600; color: #444; height: 36px; overflow: hidden; }
+        .details { padding: 12px; text-align: left; }
+        .p-name { font-size: 14px; font-weight: 600; color: #444; height: 36px; overflow: hidden; margin-bottom: 5px; }
+        .price-tag { display: flex; align-items: center; gap: 8px; }
         .new-p { color: var(--main); font-size: 18px; font-weight: bold; }
-        .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        .old-p { color: #999; text-decoration: line-through; font-size: 12px; }
+        .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 8px; }
     </style>
 </head>
 <body>
 
 <div class="nav">
     <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛍️</div>
-    <div class="search-box">🔍 <input type="text" placeholder="Search 60+ items..."></div>
+    <div class="search-box">🔍 <input type="text" placeholder="Search budget items..."></div>
 </div>
 
 <div class="container">
-    <div class="grid" id="product-grid"></div>
+    <div class="grid" id="shop"></div>
 </div>
 
 <script>
     const myNumber = "971503974296";
-    
-    // ছবিগুলো সরাসরি কোডের ভেতরে রাখার জন্য বেস-৬৪ মেথড
+
+    // আপনার বাজেট (৩০-১৪০ AED) অনুযায়ী আইটেমগুলো সাজানো হয়েছে
     const products = [
-        {n: "Lawn Cotton 3pc", p: 155, i: "https://t3.ftcdn.net/jpg/03/34/79/68/360_F_334796865_ErzNNo9xy38WjyUXS9HtLddKAn40pqCX.jpg"},
-        {n: "Maria B Silk Edition", p: 210, i: "https://t4.ftcdn.net/jpg/03/02/74/89/360_F_302748911_Lp7vH6W3T8f6fR5uI6l5o6m8fH8p5o7w.jpg"},
-        {n: "Designer Chiffon", p: 185, i: "https://t3.ftcdn.net/jpg/01/95/94/23/360_F_195942353_6f7f8g9h0j1k2l3m4n5o6p7q8r9s0t1u.jpg"},
-        {n: "Luxury Party Wear", p: 240, i: "https://t4.ftcdn.net/jpg/04/83/90/95/360_F_483909569_7S0Hn6jO8R5p4vM3w2z1A9B8C7D6E5F4.jpg"}
+        {n: "Trendy Casual T-Shirt", p: 35, o: 75, i: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"},
+        {n: "Premium Jogger Pants", p: 45, o: 90, i: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=400"},
+        {n: "Wireless Sports Earbuds", p: 85, o: 150, i: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400"},
+        {n: "Polarized Sunglasses", p: 30, o: 65, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
+        {n: "Smart Watch Series 7", p: 120, o: 250, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
+        {n: "Casual Sneakers Pro", p: 135, o: 280, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"}
     ];
 
-    const grid = document.getElementById('product-grid');
+    const shop = document.getElementById('shop');
     products.forEach(it => {
-        grid.innerHTML += `
+        shop.innerHTML += `
         <div class="card">
-            <div class="img-area">
-                <img src="${it.i}" alt="${it.n}" onerror="this.src='https://via.placeholder.com/200?text=Product+Image'">
-            </div>
+            <div class="img-area"><img src="${it.i}" alt="${it.n}"></div>
             <div class="details">
                 <div class="p-name">${it.n}</div>
-                <div class="new-p">${it.p} AED</div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/${myNumber}?text=Assalamualikum, I want to buy: ${it.n}'">Buy Now</button>
+                <div class="price-tag">
+                    <span class="new-p">${it.p} AED</span>
+                    <span class="old-p">${it.o} AED</span>
+                </div>
+                <button class="buy-btn" onclick="location.href='https://wa.me/${myNumber}?text=Assalamualikum, I want to buy: ${it.n} at ${it.p} AED'">Buy Now</button>
             </div>
         </div>`;
     });
