@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: 'Roboto', sans-serif; background-color: #f4f4f7; margin: 0; padding: 0; }
-        .header { background-color: #f57224; color: white; text-align: center; padding: 20px; font-size: 24px; font-weight: bold; position: sticky; top: 0; z-index: 100; }
-        .container { padding: 15px; }
-        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #333; border-left: 4px solid #f57224; padding-left: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .price-tag { font-size: 14px; color: #f57224; background: #fff1eb; padding: 2px 8px; border-radius: 4px; }
+        body { font-family: 'Roboto', sans-serif; background-color: #f6f6f6; margin: 0; padding: 0; }
+        .header { background-color: #f57224; color: white; text-align: center; padding: 15px; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 1000; }
+        .container { padding: 10px; }
+        .section-title { font-size: 17px; font-weight: bold; margin: 15px 0 10px; color: #222; border-left: 5px solid #f57224; padding-left: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .badge { background: #fff0e5; color: #f57224; font-size: 12px; padding: 2px 8px; border-radius: 10px; border: 1px solid #f57224; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
-        .product-image { width: 100%; height: 160px; object-fit: cover; }
-        .product-info { padding: 10px; text-align: center; }
-        .product-name { font-size: 13px; font-weight: 600; color: #444; height: 35px; overflow: hidden; margin-bottom: 5px; }
-        .product-price { color: #f57224; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
-        .buy-btn { background-color: #f57224; color: white; border: none; width: 100%; padding: 10px 0; border-radius: 5px; font-weight: bold; text-decoration: none; display: block; font-size: 13px; }
+        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: 0.3s; position: relative; }
+        .product-image { width: 100%; height: 180px; object-fit: cover; display: block; }
+        .product-info { padding: 10px; text-align: left; }
+        .product-name { font-size: 13px; font-weight: 500; color: #333; margin: 0 0 5px; height: 34px; overflow: hidden; line-height: 1.3; }
+        .product-price { color: #f57224; font-size: 16px; font-weight: bold; margin-bottom: 8px; display: block; }
+        .buy-btn { background-color: #f57224; color: white; border: none; width: 100%; padding: 10px 0; border-radius: 6px; font-weight: bold; text-decoration: none; display: block; text-align: center; font-size: 14px; }
+        .buy-btn:active { background-color: #d45d1a; }
     </style>
 </head>
 <body>
@@ -23,79 +24,54 @@
 <div class="header">AKHON SHOP</div>
 
 <div class="container">
-    <div class="section-title">Cigarettes</div>
-    <div class="product-grid">
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1559132174-897f2613970b?w=400" alt="Marlboro">
-            <div class="product-info">
-                <p class="product-name">Marlboro Gold/Red</p>
-                <p class="product-price">220 AED</p>
-                <a href="https://wa.me/9710503974296?text=Marlboro" class="buy-btn">Buy Now</a>
-            </div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1626244791338-98485290cc11?w=400" alt="Dunhill">
-            <div class="product-info">
-                <p class="product-name">Dunhill/Parliament</p>
-                <p class="product-price">240 AED</p>
-                <a href="https://wa.me/9710503974296?text=Dunhill" class="buy-btn">Buy Now</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="section-title">Pakistani Threepiece <span class="price-tag">60 AED</span></div>
-    <div class="product-grid">
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Pak1">
-            <div class="product-info"><p class="product-name">Pakistani Design 1</p><p class="product-price">60 AED</p>
-            <a href="https://wa.me/9710503974296?text=Pakistani Design 1" class="buy-btn">Buy Now</a></div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400" alt="Pak2">
-            <div class="product-info"><p class="product-name">Pakistani Design 2</p><p class="product-price">60 AED</p>
-            <a href="https://wa.me/9710503974296?text=Pakistani Design 2" class="buy-btn">Buy Now</a></div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400" alt="Pak3">
-            <div class="product-info"><p class="product-name">Pakistani Design 3</p><p class="product-price">60 AED</p>
-            <a href="https://wa.me/9710503974296?text=Pakistani Design 3" class="buy-btn">Buy Now</a></div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" alt="Pak4">
-            <div class="product-info"><p class="product-name">Pakistani Design 4</p><p class="product-price">60 AED</p>
-            <a href="https://wa.me/9710503974296?text=Pakistani Design 4" class="buy-btn">Buy Now</a></div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400" alt="Pak5">
-            <div class="product-info"><p class="product-name">Pakistani Design 5</p><p class="product-price">60 AED</p>
-            <a href="https://wa.me/9710503974296?text=Pakistani Design 5" class="buy-btn">Buy Now</a></div>
-        </div>
-    </div>
-
-    <div class="section-title">Indian Threepiece <span class="price-tag">55 AED</span></div>
+    <div class="section-title">Pakistani Threepiece <span class="badge">60 AED</span></div>
     <div class="product-grid">
         <script>
-            const images = [
-                "https://images.unsplash.com/photo-1610030469668-935142b96fe4?w=400",
-                "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",
-                "https://images.unsplash.com/photo-1598511025640-52fb16d39472?w=400",
-                "https://images.unsplash.com/photo-1599032909756-5dee8c651ad4?w=400",
-                "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?w=400",
-                "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
-                "https://images.unsplash.com/photo-1590110282851-420dc64e1dfa?w=400",
-                "https://images.unsplash.com/photo-1610030469915-d7e78176661a?w=400"
+            const pakistaniItems = [
+                { name: "Pakistani Embroidered Cotton", img: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500" },
+                { name: "Premium Lawn Three Piece", img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500" },
+                { name: "Designer Party Wear Suit", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500" },
+                { name: "Luxury Chiffon Collection", img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500" },
+                { name: "Casual Digital Print Suit", img: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=500" }
             ];
-            for(let i=0; i<8; i++){
+            pakistaniItems.forEach((item, index) => {
                 document.write(`
                 <div class="product-card">
-                    <img class="product-image" src="${images[i]}" alt="Indian ${i+1}">
+                    <img class="product-image" src="${item.img}" alt="${item.name}">
                     <div class="product-info">
-                        <p class="product-name">Indian Design ${i+1}</p>
-                        <p class="product-price">55 AED</p>
-                        <a href="https://wa.me/9710503974296?text=Indian Design ${i+1}" class="buy-btn">Buy Now</a>
+                        <p class="product-name">${item.name}</p>
+                        <span class="product-price">60 AED</span>
+                        <a href="https://wa.me/9710503974296?text=I want to buy: ${item.name} (60 AED)" class="buy-btn">Buy Now</a>
                     </div>
                 </div>`);
-            }
+            });
+        </script>
+    </div>
+
+    <div class="section-title">Indian Threepiece <span class="badge">55 AED</span></div>
+    <div class="product-grid">
+        <script>
+            const indianItems = [
+                { name: "Indian Georgette Suit", img: "https://images.unsplash.com/photo-1598511025640-52fb16d39472?w=500" },
+                { name: "Fancy Net Three Piece", img: "https://images.unsplash.com/photo-1610030469668-935142b96fe4?w=500" },
+                { name: "Silk Touch Indian Dress", img: "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?w=500" },
+                { name: "Cotton Silk Party Wear", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500" },
+                { name: "Traditional Indian Salwar", img: "https://images.unsplash.com/photo-1599032909756-5dee8c651ad4?w=500" },
+                { name: "Boutique Special Design", img: "https://images.unsplash.com/photo-1590110282851-420dc64e1dfa?w=500" },
+                { name: "Soft Silk Three Piece", img: "https://images.unsplash.com/photo-1610030469915-d7e78176661a?w=500" },
+                { name: "Elegant Indian Fashion", img: "https://images.unsplash.com/photo-1574169208507-84376144848b?w=500" }
+            ];
+            indianItems.forEach((item, index) => {
+                document.write(`
+                <div class="product-card">
+                    <img class="product-image" src="${item.img}" alt="${item.name}">
+                    <div class="product-info">
+                        <p class="product-name">${item.name}</p>
+                        <span class="product-price">55 AED</span>
+                        <a href="https://wa.me/9710503974296?text=I want to buy: ${item.name} (55 AED)" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>`);
+            });
         </script>
     </div>
 </div>
