@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP | Premium Store</title>
+    <title>AKHON SHOP | Quality Products</title>
     <style>
         :root { --main: #f57224; --bg: #f4f4f4; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
         .nav { background: var(--main); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .search-box { background: white; border-radius: 25px; padding: 10px 20px; margin: 10px auto; width: 85%; display: flex; align-items: center; }
-        .search-box input { border: none; outline: none; width: 100%; font-size: 14px; }
+        .search-box input { border: none; outline: none; width: 100%; font-size: 14px; color: #333; }
         .container { padding: 12px; max-width: 600px; margin: auto; }
         .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #333; border-left: 5px solid var(--main); padding-left: 10px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; display: flex; flex-direction: column; }
-        .sale-tag { position: absolute; top: 10px; left: 10px; background: red; color: white; font-size: 10px; padding: 4px 8px; border-radius: 4px; font-weight: bold; z-index: 10; }
-        .img-area { width: 100%; height: 180px; background: #eee; overflow: hidden; }
-        .img-area img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .sale-tag { position: absolute; top: 10px; left: 10px; background: #ff4747; color: white; font-size: 10px; padding: 4px 8px; border-radius: 4px; font-weight: bold; z-index: 10; }
+        .img-area { width: 100%; height: 200px; background: #eee; overflow: hidden; }
+        .img-area img { width: 100%; height: 100%; object-fit: cover; }
         .details { padding: 12px; flex-grow: 1; text-align: left; }
         .p-name { font-size: 14px; font-weight: 600; color: #444; height: 36px; overflow: hidden; margin-bottom: 8px; }
-        .price-tag { display: flex; align-items: center; gap: 8px; }
+        .price-tag { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
         .new-p { color: var(--main); font-size: 18px; font-weight: bold; }
         .old-p { color: #999; text-decoration: line-through; font-size: 12px; }
-        .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; transition: 0.2s; }
         .buy-btn:active { transform: scale(0.95); }
     </style>
 </head>
@@ -30,7 +30,7 @@
 
 <div class="nav">
     <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛍️</div>
-    <div class="search-box">🔍 <input type="text" id="find" onkeyup="search()" placeholder="Search from 60+ items..."></div>
+    <div class="search-box">🔍 <input type="text" id="find" onkeyup="search()" placeholder="Search from 50+ items..."></div>
 </div>
 
 <div class="container" id="shop-floor"></div>
@@ -38,42 +38,44 @@
 <script>
     const myNumber = "971503974296";
 
-    // ছবিগুলো যাতে ১০০% লোড হয় তাই হাই-কোয়ালিটি সোর্স ব্যবহার করা হয়েছে
+    // এখানে আপনার আসল প্রোডাক্টের সাথে মিলিয়ে ছবির লিঙ্ক আপডেট করা হয়েছে
     const products = [
-        { cat: "Women's Collection", items: [
-            {n: "Lawn Cotton 3pc", p: 155, o: 250, i: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400"},
-            {n: "Maria B Silk Edition", p: 210, o: 380, i: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400"},
-            {n: "Designer Chiffon Dress", p: 185, o: 300, i: "https://images.unsplash.com/photo-1621285853634-713b736b997c?w=400"},
-            {n: "Luxury Party Wear", p: 240, o: 450, i: "https://images.unsplash.com/photo-1610030469668-935102528d61?w=400"}
+        { cat: "Women's Fashion (পাকিস্তানি ড্রেস)", items: [
+            {n: "Lawn Cotton 3-Piece Dress", p: 155, o: 250, i: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400"},
+            {n: "Maria B Silk Collection", p: 210, o: 380, i: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400"},
+            {n: "Designer Party Wear Suit", p: 180, o: 300, i: "https://images.unsplash.com/photo-1621285853634-713b736b997c?w=400"},
+            {n: "Luxury Embroidery Suit", p: 240, o: 450, i: "https://images.unsplash.com/photo-1610030469668-935102528d61?w=400"},
+            {n: "Sana Safinaz Luxury", p: 240, o: 450, i: "https://images.unsplash.com/photo-1594235211582-9c17cc399e46?w=400"}
         ]},
-        { cat: "Premium Gadgets", items: [
-            {n: "Series 8 Smartwatch", p: 120, o: 250, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
-            {n: "Wireless Pro Earbuds", p: 85, o: 180, i: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"},
-            {n: "Bluetooth Headphones", p: 110, o: 190, i: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400"},
-            {n: "Luxury Handbag", p: 120, o: 220, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"}
+        { cat: "Electronics & Smart Gadgets", items: [
+            {n: "Series 8 Smartwatch Pro", p: 120, o: 250, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
+            {n: "Wireless Noise Cancelling Earbuds", p: 85, o: 180, i: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"},
+            {n: "Bluetooth Over-Ear Headphone", p: 110, o: 190, i: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400"},
+            {n: "Luxury Red Handbag", p: 120, o: 220, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"}
         ]},
-        { cat: "Shoes & Accessories", items: [
-            {n: "Nike Sports Sneakers", p: 130, o: 260, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
-            {n: "Polarized Sunglasses", p: 45, o: 99, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
-            {n: "Classic Leather Belt", p: 35, o: 70, i: "https://images.unsplash.com/photo-1624222247344-550fb8ecf7c4?w=400"}
+        { cat: "Men's & Others", items: [
+            {n: "Men's Cotton Panjabi", p: 120, o: 180, i: "https://images.unsplash.com/photo-1594235211582-9c17cc399e46?w=400"},
+            {n: "Casual T-Shirt Set (3 Pack)", p: 85, o: 150, i: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"},
+            {n: "Polarized UV Sunglasses", p: 45, o: 99, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
+            {n: "Nike Air Running Shoes", p: 130, o: 260, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"}
         ]}
     ];
 
-    function startShop() {
+    function renderShop() {
         const floor = document.getElementById('shop-floor');
         products.forEach(sec => {
             let html = `<div class="section-title">${sec.cat}</div><div class="grid">`;
             sec.items.forEach(it => {
                 html += `
                 <div class="card">
-                    <div class="sale-tag">Sale</div>
+                    <div class="sale-tag">SALE</div>
                     <div class="img-area">
-                        <img src="${it.i}" alt="${it.n}" onerror="this.src='https://via.placeholder.com/200?text=AKHON+SHOP'">
+                        <img src="${it.i}" alt="${it.n}" loading="lazy">
                     </div>
                     <div class="details">
                         <div class="p-name">${it.n}</div>
                         <div class="price-tag"><span class="new-p">${it.p} AED</span><span class="old-p">${it.o} AED</span></div>
-                        <button class="buy-btn" onclick="location.href='https://wa.me/${myNumber}?text=I want to buy: ${it.n}'">Buy Now</button>
+                        <button class="buy-btn" onclick="location.href='https://wa.me/${myNumber}?text=Assalamualikum, I want to buy: ${it.n}'">Buy Now</button>
                     </div>
                 </div>`;
             });
@@ -90,7 +92,7 @@
             c.style.display = name.includes(val) ? "flex" : "none";
         }
     }
-    startShop();
+    renderShop();
 </script>
 
 </body>
