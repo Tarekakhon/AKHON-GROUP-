@@ -3,95 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP | Mega Store</title>
+    <title>AKHON SHOP | Premium Store</title>
     <style>
-        :root { --temu-orange: #f57224; --bg: #f4f4f4; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
-        .header { background: var(--temu-orange); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
-        .search-area { background: white; border-radius: 20px; padding: 10px; margin: 10px auto; width: 90%; display: flex; align-items: center; }
-        .search-area input { border: none; outline: none; width: 100%; padding-left: 10px; font-size: 14px; }
-        .container { padding: 10px; }
-        .cat-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; border-left: 5px solid var(--temu-orange); padding-left: 10px; color: #333; }
+        :root { --main: #f57224; --bg: #f4f4f4; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; }
+        .nav { background: var(--main); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .search-box { background: white; border-radius: 25px; padding: 10px 20px; margin: 10px auto; width: 85%; display: flex; align-items: center; }
+        .search-box input { border: none; outline: none; width: 100%; font-size: 14px; }
+        .container { padding: 12px; max-width: 600px; margin: auto; }
+        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #333; border-left: 5px solid var(--main); padding-left: 10px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; position: relative; transition: 0.3s; }
-        .badge { position: absolute; top: 8px; left: 8px; background: #ff4747; color: white; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: bold; z-index: 5; }
-        .img-box { width: 100%; height: 180px; background: #eee; position: relative; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .info { padding: 12px; flex-grow: 1; }
-        .name { font-size: 13px; font-weight: 600; color: #444; height: 34px; overflow: hidden; margin-bottom: 8px; }
-        .price-row { display: flex; align-items: center; gap: 8px; }
-        .price { color: var(--temu-orange); font-size: 17px; font-weight: bold; }
-        .old-price { color: #999; text-decoration: line-through; font-size: 12px; }
-        .btn { background: var(--temu-orange); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; font-size: 14px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; display: flex; flex-direction: column; }
+        .sale-tag { position: absolute; top: 10px; left: 10px; background: red; color: white; font-size: 10px; padding: 4px 8px; border-radius: 4px; font-weight: bold; z-index: 10; }
+        .img-area { width: 100%; height: 180px; background: #eee; overflow: hidden; }
+        .img-area img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .details { padding: 12px; flex-grow: 1; text-align: left; }
+        .p-name { font-size: 14px; font-weight: 600; color: #444; height: 36px; overflow: hidden; margin-bottom: 8px; }
+        .price-tag { display: flex; align-items: center; gap: 8px; }
+        .new-p { color: var(--main); font-size: 18px; font-weight: bold; }
+        .old-p { color: #999; text-decoration: line-through; font-size: 12px; }
+        .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .buy-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
-<div class="header">
+<div class="nav">
     <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛍️</div>
-    <div class="search-area">🔍 <input type="text" id="find" onkeyup="search()" placeholder="Search 60+ items..."></div>
+    <div class="search-box">🔍 <input type="text" id="find" onkeyup="search()" placeholder="Search from 60+ items..."></div>
 </div>
 
-<div class="container" id="mall"></div>
+<div class="container" id="shop-floor"></div>
 
 <script>
-    const waNumber = "971503974296";
+    const myNumber = "971503974296";
 
-    // মোট ৪টি ক্যাটাগরিতে ৬০টি আইটেমের ডাটা
-    const storeData = [
-        { cat: "Fashion - Women's Special", items: [
-            {n: "Lawn 3-Piece Silk", p: 155, o: 250, i: "https://picsum.photos/seed/dress1/400/400"},
-            {n: "Maria B Luxury Edition", p: 210, o: 380, i: "https://picsum.photos/seed/dress2/400/400"},
-            {n: "Designer Party Wear", p: 180, o: 300, i: "https://picsum.photos/seed/dress3/400/400"},
-            {n: "Chiffon Special Suit", p: 240, o: 450, i: "https://picsum.photos/seed/dress4/400/400"},
-            {n: "Cotton Salwar Kameez", p: 120, o: 220, i: "https://picsum.photos/seed/dress5/400/400"},
-            {n: "Handbag Luxury Red", p: 120, o: 220, i: "https://picsum.photos/seed/bag1/400/400"}
+    // ছবিগুলো যাতে ১০০% লোড হয় তাই হাই-কোয়ালিটি সোর্স ব্যবহার করা হয়েছে
+    const products = [
+        { cat: "Women's Collection", items: [
+            {n: "Lawn Cotton 3pc", p: 155, o: 250, i: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400"},
+            {n: "Maria B Silk Edition", p: 210, o: 380, i: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400"},
+            {n: "Designer Chiffon Dress", p: 185, o: 300, i: "https://images.unsplash.com/photo-1621285853634-713b736b997c?w=400"},
+            {n: "Luxury Party Wear", p: 240, o: 450, i: "https://images.unsplash.com/photo-1610030469668-935102528d61?w=400"}
         ]},
-        { cat: "Smart Gadgets & Electronics", items: [
-            {n: "Series 8 Smartwatch", p: 120, o: 250, i: "https://picsum.photos/seed/watch1/400/400"},
-            {n: "Wireless Pro Earbuds", p: 85, o: 180, i: "https://picsum.photos/seed/buds1/400/400"},
-            {n: "Over-Ear Headphones", p: 110, o: 190, i: "https://picsum.photos/seed/audio1/400/400"},
-            {n: "Portable BT Speaker", p: 55, o: 110, i: "https://picsum.photos/seed/speaker1/400/400"},
-            {n: "Smart LED Night Lamp", p: 40, o: 90, i: "https://picsum.photos/seed/lamp1/400/400"},
-            {n: "Mini Photo Camera", p: 299, o: 450, i: "https://picsum.photos/seed/cam1/400/400"}
+        { cat: "Premium Gadgets", items: [
+            {n: "Series 8 Smartwatch", p: 120, o: 250, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
+            {n: "Wireless Pro Earbuds", p: 85, o: 180, i: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"},
+            {n: "Bluetooth Headphones", p: 110, o: 190, i: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400"},
+            {n: "Luxury Handbag", p: 120, o: 220, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"}
         ]},
-        { cat: "Men's Collection", items: [
-            {n: "Men's Cotton Panjabi", p: 120, o: 180, i: "https://picsum.photos/seed/men1/400/400"},
-            {n: "Casual T-Shirt Set", p: 85, o: 150, i: "https://picsum.photos/seed/men2/400/400"},
-            {n: "Premium Sports Shoes", p: 130, o: 260, i: "https://picsum.photos/seed/shoe1/400/400"},
-            {n: "Polarized Sunglasses", p: 45, o: 99, i: "https://picsum.photos/seed/glass1/400/400"}
-        ]},
-        { cat: "Home & Kitchen Decor", items: [
-            {n: "Luxury Bed Sheet Set", p: 140, o: 280, i: "https://picsum.photos/seed/home1/400/400"},
-            {n: "Ceramic Flower Vase", p: 50, o: 100, i: "https://picsum.photos/seed/home2/400/400"},
-            {n: "Modern Wall Clock", p: 60, o: 120, i: "https://picsum.photos/seed/home3/400/400"},
-            {n: "Kitchen Knife Pro Set", p: 75, o: 150, i: "https://picsum.photos/seed/kitchen1/400/400"}
+        { cat: "Shoes & Accessories", items: [
+            {n: "Nike Sports Sneakers", p: 130, o: 260, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
+            {n: "Polarized Sunglasses", p: 45, o: 99, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
+            {n: "Classic Leather Belt", p: 35, o: 70, i: "https://images.unsplash.com/photo-1624222247344-550fb8ecf7c4?w=400"}
         ]}
     ];
 
-    function renderStore() {
-        const mall = document.getElementById('mall');
-        storeData.forEach(section => {
-            let html = `<div class="cat-title">${section.cat}</div><div class="grid">`;
-            section.items.forEach(item => {
+    function startShop() {
+        const floor = document.getElementById('shop-floor');
+        products.forEach(sec => {
+            let html = `<div class="section-title">${sec.cat}</div><div class="grid">`;
+            sec.items.forEach(it => {
                 html += `
                 <div class="card">
-                    <div class="badge">SALE</div>
-                    <div class="img-box">
-                        <img src="${item.i}" alt="${item.n}" loading="lazy" onerror="this.src='https://via.placeholder.com/200?text=Akhon+Shop'">
+                    <div class="sale-tag">Sale</div>
+                    <div class="img-area">
+                        <img src="${it.i}" alt="${it.n}" onerror="this.src='https://via.placeholder.com/200?text=AKHON+SHOP'">
                     </div>
-                    <div class="info">
-                        <div class="name">${item.n}</div>
-                        <div class="price-row">
-                            <span class="price">${item.p} AED</span>
-                            <span class="old-price">${item.o} AED</span>
-                        </div>
-                        <button class="btn" onclick="location.href='https://wa.me/${waNumber}?text=Order: ${item.n}'">Buy Now</button>
+                    <div class="details">
+                        <div class="p-name">${it.n}</div>
+                        <div class="price-tag"><span class="new-p">${it.p} AED</span><span class="old-p">${it.o} AED</span></div>
+                        <button class="buy-btn" onclick="location.href='https://wa.me/${myNumber}?text=I want to buy: ${it.n}'">Buy Now</button>
                     </div>
                 </div>`;
             });
             html += `</div>`;
-            mall.innerHTML += html;
+            floor.innerHTML += html;
         });
     }
 
@@ -99,12 +86,11 @@
         let val = document.getElementById('find').value.toLowerCase();
         let cards = document.getElementsByClassName('card');
         for (let c of cards) {
-            let name = c.querySelector('.name').innerText.toLowerCase();
+            let name = c.querySelector('.p-name').innerText.toLowerCase();
             c.style.display = name.includes(val) ? "flex" : "none";
         }
     }
-    
-    renderStore();
+    startShop();
 </script>
 
 </body>
