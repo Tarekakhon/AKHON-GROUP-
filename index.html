@@ -3,89 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP - Fixed Images</title>
+    <title>AKHON SHOP - Mega Store</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
-        .header { background-color: #f57224; color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .search-container { background: white; border-radius: 25px; padding: 8px 15px; margin: 10px; display: flex; align-items: center; }
-        .search-container input { border: none; outline: none; width: 100%; padding: 5px; font-size: 14px; }
+        :root { --temu-orange: #f57224; --bg: #f4f4f4; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
+        .header { background-color: var(--temu-orange); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
+        .search-box { background: white; border-radius: 25px; padding: 10px 15px; margin: 10px; display: flex; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .search-box input { border: none; outline: none; width: 100%; font-size: 14px; margin-left: 10px; }
         .container { padding: 10px; }
-        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #333; border-left: 5px solid #f57224; padding-left: 10px; }
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-        
-        /* ফটো লোড না হলে ডিজাইন */
-        .product-image { width: 100%; height: 200px; object-fit: cover; background-color: #e9ecef; display: block; border-bottom: 1px solid #eee; }
-        
-        .product-info { padding: 12px; }
-        .product-name { font-size: 14px; font-weight: 600; color: #333; height: 36px; overflow: hidden; margin-bottom: 8px; }
-        .price-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-        .current-price { color: #f57224; font-size: 18px; font-weight: bold; }
-        .old-price { color: #999; text-decoration: line-through; font-size: 12px; }
-        .buy-btn { background-color: #f57224; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
+        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #222; border-left: 5px solid var(--temu-orange); padding-left: 10px; display: flex; justify-content: space-between; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); position: relative; display: flex; flex-direction: column; }
+        .badge { position: absolute; top: 8px; left: 8px; background: #ff4747; color: white; font-size: 10px; padding: 3px 7px; border-radius: 4px; font-weight: bold; }
+        .product-image { width: 100%; height: 180px; object-fit: cover; background-color: #f0f0f0; }
+        .product-info { padding: 10px; flex-grow: 1; }
+        .product-name { font-size: 13px; font-weight: 500; color: #333; height: 34px; overflow: hidden; line-height: 1.3; margin-bottom: 5px; }
+        .price-row { display: flex; align-items: center; gap: 5px; margin-bottom: 8px; }
+        .current-price { color: var(--temu-orange); font-size: 16px; font-weight: bold; }
+        .old-price { color: #999; text-decoration: line-through; font-size: 11px; }
+        .buy-btn { background-color: var(--temu-orange); color: white; border: none; width: 100%; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; }
     </style>
 </head>
 <body>
 
 <div class="header">
     <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛒</div>
-    <div class="search-container">
-        🔍 <input type="text" id="searchInput" onkeyup="searchFn()" placeholder="Search dresses, shoes, bags...">
-    </div>
+    <div class="search-box">🔍 <input type="text" id="q" onkeyup="search()" placeholder="Search 50+ items..."></div>
 </div>
 
 <div class="container">
-    <div class="section-title">New Arrivals</div>
-    <div class="product-grid" id="productGrid">
-        <div class="product-card">
-            <img class="product-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7v_jR4vQeD-yq8_G_H8j7zX9_I0Y6B6Z8gQ&s" alt="Pakistani Dress">
-            <div class="product-info">
-                <p class="product-name">Pakistani Luxury Lawn 3-Piece</p>
-                <div class="price-row"><span class="current-price">155 AED</span> <span class="old-price">250 AED</span></div>
-                <button class="buy-btn" onclick="order('Pakistani Lawn')">Buy Now</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <img class="product-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_W4_1-fE5uF2-7f_8z_J9_u_O-F-P-E-V-A&s" alt="Indian Dress">
-            <div class="product-info">
-                <p class="product-name">Silk Touch Indian Party Wear</p>
-                <div class="price-row"><span class="current-price">180 AED</span> <span class="old-price">300 AED</span></div>
-                <button class="buy-btn" onclick="order('Indian Silk')">Buy Now</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" alt="Nike Shoes">
-            <div class="product-info">
-                <p class="product-name">Premium Running Sneakers</p>
-                <div class="price-row"><span class="current-price">95 AED</span> <span class="old-price">180 AED</span></div>
-                <button class="buy-btn" onclick="order('Sneakers')">Buy Now</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500" alt="Handbag">
-            <div class="product-info">
-                <p class="product-name">Luxury Handbag for Women</p>
-                <div class="price-row"><span class="current-price">120 AED</span> <span class="old-price">220 AED</span></div>
-                <button class="buy-btn" onclick="order('Handbag')">Buy Now</button>
-            </div>
-        </div>
-    </div>
+    <div id="shop-content"></div>
 </div>
 
 <script>
-    function order(name) {
-        window.location.href = `https://wa.me/9710503974296?text=I want to buy: ${name}`;
-    }
+    const wa = "9710503974296";
+    const categories = [
+        { title: "Pakistani Collection", items: [
+            {n: "Lawn Cotton 3pc", p: 155, o: 250, i: "https://m.media-amazon.com/images/I/71N8N4mS+LL._AC_UY1100_.jpg"},
+            {n: "Maria B Silk", p: 210, o: 380, i: "https://m.media-amazon.com/images/I/61I07yC5+0L._AC_UY1100_.jpg"},
+            {n: "Aghanoor Party", p: 195, o: 320, i: "https://m.media-amazon.com/images/I/61B6-C5pA4L._AC_UY1100_.jpg"},
+            {n: "Sana Safinaz", p: 240, o: 450, i: "https://m.media-amazon.com/images/I/71r99E2nUWL._AC_UY1100_.jpg"},
+            {n: "Khaadi Summer", p: 130, o: 210, i: "https://m.media-amazon.com/images/I/71uV8I6WreL._AC_UY1100_.jpg"},
+            {n: "Gul Ahmed Silk", p: 185, o: 290, i: "https://m.media-amazon.com/images/I/61X-H08f8rL._AC_UY1100_.jpg"},
+            {n: "Zainab Chottani", p: 300, o: 550, i: "https://m.media-amazon.com/images/I/81hI+L-XmML._AC_UY1100_.jpg"},
+            {n: "Elan Bridal", p: 350, o: 600, i: "https://m.media-amazon.com/images/I/71r99E2nUWL._AC_UY1100_.jpg"},
+            {n: "Designer Lawn", p: 140, o: 220, i: "https://m.media-amazon.com/images/I/61I07yC5+0L._AC_UY1100_.jpg"},
+            {n: "Pakistani Kurti", p: 65, o: 120, i: "https://m.media-amazon.com/images/I/71N8N4mS+LL._AC_UY1100_.jpg"}
+        ]},
+        { title: "Footwear & Shoes", items: [
+            {n: "Nike Air Sport", p: 120, o: 250, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
+            {n: "Adidas Runner", p: 145, o: 280, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
+            {n: "Casual Sneaker", p: 85, o: 160, i: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400"},
+            {n: "Formal Leather", p: 190, o: 350, i: "https://images.unsplash.com/photo-1449241595218-8480286115c0?w=400"},
+            {n: "White Comfort", p: 70, o: 140, i: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400"},
+            {n: "Walking Shoes", p: 99, o: 190, i: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400"},
+            {n: "High Top Boots", p: 220, o: 400, i: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=400"},
+            {n: "Gym Sneakers", p: 110, o: 200, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
+            {n: "Leather Loafers", p: 160, o: 300, i: "https://images.unsplash.com/photo-1449241595218-8480286115c0?w=400"},
+            {n: "Summer Sandals", p: 45, o: 90, i: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400"}
+        ]},
+        { title: "Bags & Accessories", items: [
+            {n: "Luxury Handbag", p: 140, o: 280, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"},
+            {n: "Travel Backpack", p: 110, o: 220, i: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?w=400"},
+            {n: "Ray-Ban Sunglasses", p: 45, o: 95, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
+            {n: "Leather Wallet", p: 35, o: 80, i: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400"},
+            {n: "Golden Watch", p: 199, o: 400, i: "https://images.unsplash.com/photo-1524333865980-6019170f7730?w=400"},
+            {n: "Designer Purse", p: 85, o: 150, i: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"},
+            {n: "Laptop Bag", p: 130, o: 250, i: "https://images.unsplash.com/photo-1553062407-98eeb94c6a62?w=400"},
+            {n: "UV Sun Glass", p: 25, o: 60, i: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400"},
+            {n: "Smart Watch S8", p: 250, o: 450, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"},
+            {n: "Leather Belt", p: 30, o: 60, i: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400"}
+        ]}
+    ];
 
-    function searchFn() {
-        let input = document.getElementById('searchInput').value.toLowerCase();
+    const content = document.getElementById('shop-content');
+    categories.forEach(cat => {
+        let section = `<div class="section-title">${cat.title} <span>Best Deals</span></div><div class="product-grid">`;
+        cat.items.forEach(item => {
+            section += `
+            <div class="product-card">
+                <div class="badge">Sale</div>
+                <img class="product-image" src="${item.i}" alt="${item.n}" onerror="this.src='https://via.placeholder.com/200?text=Akhon+Shop'">
+                <div class="product-info">
+                    <p class="product-name">${item.n}</p>
+                    <div class="price-row"><span class="current-price">${item.p} AED</span><span class="old-price">${item.o} AED</span></div>
+                    <button class="buy-btn" onclick="location.href='https://wa.me/${wa}?text=Order: ${item.n}'">Buy Now</button>
+                </div>
+            </div>`;
+        });
+        section += `</div>`;
+        content.innerHTML += section;
+    });
+
+    function search() {
+        let val = document.getElementById('q').value.toLowerCase();
         let cards = document.getElementsByClassName('product-card');
-        for (let i = 0; i < cards.length; i++) {
-            let name = cards[i].querySelector('.product-name').innerText.toLowerCase();
-            cards[i].style.display = name.includes(input) ? "flex" : "none";
+        for (let c of cards) {
+            let n = c.querySelector('.product-name').innerText.toLowerCase();
+            c.style.display = n.includes(val) ? "flex" : "none";
         }
     }
 </script>
