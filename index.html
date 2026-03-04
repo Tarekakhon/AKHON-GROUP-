@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP</title>
+    <title>AKHON SHOP - Pakistani Collection</title>
     <style>
         body { font-family: 'Roboto', sans-serif; background-color: #f7f7f7; margin: 0; padding: 0; }
         .header { background-color: #f57224; color: white; padding: 10px 15px; position: sticky; top: 0; z-index: 1000; }
@@ -13,7 +13,7 @@
         .section-title { font-size: 17px; font-weight: bold; margin: 20px 0 10px; color: #222; border-left: 5px solid #f57224; padding-left: 10px; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .product-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.06); display: flex; flex-direction: column; text-decoration: none; }
-        .product-image { width: 100%; height: 180px; object-fit: cover; display: block; background-color: #eee; }
+        .product-image { width: 100%; height: 210px; object-fit: cover; display: block; background-color: #eee; }
         .product-info { padding: 10px; }
         .product-name { font-size: 13px; font-weight: 500; color: #333; margin: 0 0 5px; height: 34px; overflow: hidden; line-height: 1.3; }
         .rating { color: #ffc107; font-size: 11px; margin-bottom: 5px; }
@@ -28,83 +28,55 @@
 
 <div class="header">
     <div class="top-bar"><span>AKHON SHOP</span> 🛒</div>
-    <div class="search-bar">🔍 Search on Akhon Shop</div>
+    <div class="search-bar">🔍 Search for Pakistani Dresses...</div>
 </div>
 
 <div class="container">
     
-    <div class="section-title">Footwear & Sports</div>
+    <div class="section-title">Pakistani Exclusive Collection</div>
     <div class="product-grid">
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" alt="Shoes">
-            <div class="product-info">
-                <p class="product-name">Men's Premium Sneakers - Red Edition</p>
-                <div class="rating">★★★★★ (450)</div>
-                <div class="shipping">⚡ Free Shipping</div>
-                <div class="price-row"><span class="current-price">145 AED</span> <span class="old-price">250 AED</span></div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/9710503974296?text=I want Shoes'">Buy Now</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Watch">
-            <div class="product-info">
-                <p class="product-name">Classic Leather Watch for Men</p>
-                <div class="rating">★★★★☆ (310)</div>
-                <div class="shipping">⚡ Fast Delivery</div>
-                <div class="price-row"><span class="current-price">89 AED</span> <span class="old-price">150 AED</span></div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/9710503974296?text=I want Watch'">Buy Now</button>
-            </div>
-        </div>
-    </div>
+        
+        <script>
+            // পাকিস্তানি ড্রেসের নামের তালিকা
+            const dresses = [
+                "Luxury Lawn Three Piece", "Aghanoor Party Wear", "Maria B Silk Collection", 
+                "Baroque Premium Chiffon", "Gul Ahmed Summer Lawn", "Sana Safinaz Designer Set",
+                "Khaadi Casual Wear", "Asim Jofa Wedding Fest", "Elan Bridal Edition", "Zainab Chottani Special"
+            ];
 
-    <div class="section-title">Trending Accessories</div>
-    <div class="product-grid">
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500" alt="Sunglasses">
-            <div class="product-info">
-                <p class="product-name">UV Protected Polarized Sunglasses</p>
-                <div class="rating">★★★★★ (185)</div>
-                <div class="shipping">⚡ Free Shipping</div>
-                <div class="price-row"><span class="current-price">45 AED</span> <span class="old-price">99 AED</span></div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/9710503974296?text=I want Sunglasses'">Buy Now</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500" alt="Bag">
-            <div class="product-info">
-                <p class="product-name">Luxury Handbag for Women</p>
-                <div class="rating">★★★★☆ (95)</div>
-                <div class="shipping">⚡ Top Rated</div>
-                <div class="price-row"><span class="current-price">120 AED</span> <span class="old-price">220 AED</span></div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/9710503974296?text=I want Handbag'">Buy Now</button>
-            </div>
-        </div>
-    </div>
+            // হাই-কোয়ালিটি পাকিস্তানি মডেল ড্রেস ইমেজেস
+            const images = [
+                "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500",
+                "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500",
+                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500",
+                "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500",
+                "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=500",
+                "https://images.unsplash.com/photo-1598511025640-52fb16d39472?w=500",
+                "https://images.unsplash.com/photo-1610030469668-935142b96fe4?w=500",
+                "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?w=500",
+                "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500",
+                "https://images.unsplash.com/photo-1599032909756-5dee8c651ad4?w=500"
+            ];
 
-    <div class="section-title">Electronics & Home</div>
-    <div class="product-grid">
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Headphone">
-            <div class="product-info">
-                <p class="product-name">Bluetooth Over-Ear Headphones</p>
-                <div class="rating">★★★★★ (520)</div>
-                <div class="shipping">⚡ Free Shipping</div>
-                <div class="price-row"><span class="current-price">110 AED</span> <span class="old-price">190 AED</span></div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/9710503974296?text=I want Headphone'">Buy Now</button>
-            </div>
-        </div>
-        <div class="product-card">
-            <img class="product-image" src="https://images.unsplash.com/photo-1526170315873-3a92b4880d01?w=500" alt="Camera">
-            <div class="product-info">
-                <p class="product-name">Instant Mini Photo Camera</p>
-                <div class="rating">★★★★☆ (140)</div>
-                <div class="shipping">⚡ Fast Shipping</div>
-                <div class="price-row"><span class="current-price">299 AED</span> <span class="old-price">450 AED</span></div>
-                <button class="buy-btn" onclick="location.href='https://wa.me/9710503974296?text=I want Camera'">Buy Now</button>
-            </div>
-        </div>
-    </div>
+            for(let i=0; i<10; i++){
+                document.write(`
+                <div class="product-card">
+                    <img class="product-image" src="${images[i]}" alt="Pakistani Dress ${i+1}">
+                    <div class="product-info">
+                        <p class="product-name">${dresses[i]}</p>
+                        <div class="rating">★★★★★ (${80 + i * 5})</div>
+                        <div class="shipping">⚡ Free Shipping</div>
+                        <div class="price-row">
+                            <span class="current-price">${150 + i * 10} AED</span>
+                            <span class="old-price">${250 + i * 15} AED</span>
+                        </div>
+                        <button class="buy-btn" onclick="location.href='https://wa.me/9710503974296?text=I want to buy ${dresses[i]}'">Buy Now</button>
+                    </div>
+                </div>`);
+            }
+        </script>
 
+    </div>
 </div>
 
 </body>
