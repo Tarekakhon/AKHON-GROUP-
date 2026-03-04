@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP</title>
     <style>
         body { font-family: 'Roboto', sans-serif; background-color: #f4f4f7; margin: 0; padding: 0; }
         .header { background-color: #f57224; color: white; text-align: center; padding: 20px; font-size: 24px; font-weight: bold; position: sticky; top: 0; z-index: 100; }
         .container { padding: 15px; }
-        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #333; border-left: 4px solid #f57224; padding-left: 10px; display: flex; justify-content: space-between; }
+        .section-title { font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #333; border-left: 4px solid #f57224; padding-left: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .price-tag { font-size: 14px; color: #f57224; background: #fff1eb; padding: 2px 8px; border-radius: 4px; }
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
-        .product-image { width: 100%; height: 150px; object-fit: cover; }
+        .product-image { width: 100%; height: 160px; object-fit: cover; }
         .product-info { padding: 10px; text-align: center; }
         .product-name { font-size: 13px; font-weight: 600; color: #444; height: 35px; overflow: hidden; margin-bottom: 5px; }
         .product-price { color: #f57224; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
@@ -26,7 +26,7 @@
     <div class="section-title">Cigarettes</div>
     <div class="product-grid">
         <div class="product-card">
-            <img class="product-image" src="https://www.the-cigarette-store.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/m/a/marlboro_gold_original.jpg" alt="Marlboro">
+            <img class="product-image" src="https://images.unsplash.com/photo-1559132174-897f2613970b?w=400" alt="Marlboro">
             <div class="product-info">
                 <p class="product-name">Marlboro Gold/Red</p>
                 <p class="product-price">220 AED</p>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="product-card">
-            <img class="product-image" src="https://www.the-cigarette-store.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/d/u/dunhill_international_red.jpg" alt="Dunhill">
+            <img class="product-image" src="https://images.unsplash.com/photo-1626244791338-98485290cc11?w=400" alt="Dunhill">
             <div class="product-info">
                 <p class="product-name">Dunhill/Parliament</p>
                 <p class="product-price">240 AED</p>
@@ -43,34 +43,56 @@
         </div>
     </div>
 
-    <div class="section-title">Pakistani Threepiece <span>60 AED</span></div>
-    <div class="product-grid" id="pakistani">
-        <script>
-            for(let i=1; i<=5; i++){
-                document.write(`
-                <div class="product-card">
-                    <img class="product-image" src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=400&index=${i}" alt="Pakistani ${i}">
-                    <div class="product-info">
-                        <p class="product-name">Pakistani Design ${i}</p>
-                        <p class="product-price">60 AED</p>
-                        <a href="https://wa.me/9710503974296?text=Pakistani Threepiece Design ${i}" class="buy-btn">Buy Now</a>
-                    </div>
-                </div>`);
-            }
-        </script>
+    <div class="section-title">Pakistani Threepiece <span class="price-tag">60 AED</span></div>
+    <div class="product-grid">
+        <div class="product-card">
+            <img class="product-image" src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400" alt="Pak1">
+            <div class="product-info"><p class="product-name">Pakistani Design 1</p><p class="product-price">60 AED</p>
+            <a href="https://wa.me/9710503974296?text=Pakistani Design 1" class="buy-btn">Buy Now</a></div>
+        </div>
+        <div class="product-card">
+            <img class="product-image" src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400" alt="Pak2">
+            <div class="product-info"><p class="product-name">Pakistani Design 2</p><p class="product-price">60 AED</p>
+            <a href="https://wa.me/9710503974296?text=Pakistani Design 2" class="buy-btn">Buy Now</a></div>
+        </div>
+        <div class="product-card">
+            <img class="product-image" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400" alt="Pak3">
+            <div class="product-info"><p class="product-name">Pakistani Design 3</p><p class="product-price">60 AED</p>
+            <a href="https://wa.me/9710503974296?text=Pakistani Design 3" class="buy-btn">Buy Now</a></div>
+        </div>
+        <div class="product-card">
+            <img class="product-image" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" alt="Pak4">
+            <div class="product-info"><p class="product-name">Pakistani Design 4</p><p class="product-price">60 AED</p>
+            <a href="https://wa.me/9710503974296?text=Pakistani Design 4" class="buy-btn">Buy Now</a></div>
+        </div>
+        <div class="product-card">
+            <img class="product-image" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400" alt="Pak5">
+            <div class="product-info"><p class="product-name">Pakistani Design 5</p><p class="product-price">60 AED</p>
+            <a href="https://wa.me/9710503974296?text=Pakistani Design 5" class="buy-btn">Buy Now</a></div>
+        </div>
     </div>
 
-    <div class="section-title">Indian Threepiece <span>380 AED</span></div>
-    <div class="product-grid" id="indian">
+    <div class="section-title">Indian Threepiece <span class="price-tag">55 AED</span></div>
+    <div class="product-grid">
         <script>
-            for(let i=1; i<=8; i++){
+            const images = [
+                "https://images.unsplash.com/photo-1610030469668-935142b96fe4?w=400",
+                "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400",
+                "https://images.unsplash.com/photo-1598511025640-52fb16d39472?w=400",
+                "https://images.unsplash.com/photo-1599032909756-5dee8c651ad4?w=400",
+                "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?w=400",
+                "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
+                "https://images.unsplash.com/photo-1590110282851-420dc64e1dfa?w=400",
+                "https://images.unsplash.com/photo-1610030469915-d7e78176661a?w=400"
+            ];
+            for(let i=0; i<8; i++){
                 document.write(`
                 <div class="product-card">
-                    <img class="product-image" src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?q=80&w=400&index=${i}" alt="Indian ${i}">
+                    <img class="product-image" src="${images[i]}" alt="Indian ${i+1}">
                     <div class="product-info">
-                        <p class="product-name">Indian Design ${i}</p>
-                        <p class="product-price">380 AED</p>
-                        <a href="https://wa.me/9710503974296?text=Indian Threepiece Design ${i}" class="buy-btn">Buy Now</a>
+                        <p class="product-name">Indian Design ${i+1}</p>
+                        <p class="product-price">55 AED</p>
+                        <a href="https://wa.me/9710503974296?text=Indian Design ${i+1}" class="buy-btn">Buy Now</a>
                     </div>
                 </div>`);
             }
