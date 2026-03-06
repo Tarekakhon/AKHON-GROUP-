@@ -6,32 +6,34 @@
     <title>AKHON SHOP | Premium Store</title>
     <style>
         :root { --main: #f57224; --bg: #f4f4f4; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 20px; }
-        .nav { background: var(--main); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 20px; }
+        .nav { background: var(--main); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .search-bar { background: white; border-radius: 25px; padding: 8px 15px; margin: 10px auto; width: 88%; display: flex; align-items: center; }
         .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; margin-left: 8px; }
-        .tabs { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 8px; position: sticky; top: 110px; z-index: 999; border-bottom: 1px solid #ddd; }
+        .tabs { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 8px; border-bottom: 1px solid #ddd; }
         .tab { padding: 8px 18px; background: #f0f0f0; border-radius: 20px; white-space: nowrap; cursor: pointer; font-size: 13px; font-weight: 600; }
         .tab.active { background: var(--main); color: white; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; max-width: 900px; margin: auto; }
         .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
-        .img-box { width: 100%; height: 180px; background: #eee; }
+        .img-box { width: 100%; height: 180px; background: #eee; position: relative; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
         .info { padding: 12px; }
+        .p-name { font-size: 13px; font-weight: 600; color: #333; height: 35px; overflow: hidden; margin-bottom: 5px; }
         .price { color: var(--main); font-size: 17px; font-weight: bold; }
         .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        #orderModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
-        .form-box { background: white; padding: 20px; width: 85%; max-width: 400px; border-radius: 15px; text-align: center; }
-        .choice-btn { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-wa { background: #25D366; color: white; flex: 1; padding: 15px; border-radius: 8px; border: none; font-weight: bold; }
-        .btn-imo { background: #1a73e8; color: white; flex: 1; padding: 15px; border-radius: 8px; border: none; font-weight: bold; }
+        #orderModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
+        .form-box { background: white; padding: 25px; width: 85%; max-width: 350px; border-radius: 15px; text-align: center; }
+        .choice-title { font-weight: bold; margin-bottom: 15px; color: #333; }
+        .choice-btn { display: flex; flex-direction: column; gap: 10px; }
+        .btn-wa { background: #25D366; color: white; padding: 15px; border-radius: 8px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .btn-imo { background: #1a73e8; color: white; padding: 15px; border-radius: 8px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="nav">
-    <div style="font-size: 24px; font-weight: bold;">AKHON SHOP 🛍️</div>
+    <div style="font-size: 22px; font-weight: bold;">AKHON SHOP 🛍️</div>
     <div class="search-bar">🔍 <input type="text" id="find" onkeyup="filter()" placeholder="সার্চ করুন..."></div>
 </div>
 
@@ -40,19 +42,20 @@
     <div class="tab" onclick="setCat('Dresses', this)">Dresses 👗</div>
     <div class="tab" onclick="setCat('Gadgets', this)">Gadgets 📱</div>
     <div class="tab" onclick="setCat('Shoes', this)">Shoes 👟</div>
+    <div class="tab" onclick="setCat('Watches', this)">Watches ⌚</div>
 </div>
 
 <div class="grid" id="list"></div>
 
 <div id="orderModal">
     <div class="form-box">
-        <h3 id="selectedItem">অর্ডার কনফার্ম করুন</h3>
-        <p>যোগাযোগের মাধ্যম বেছে নিন:</p>
+        <div class="choice-title" id="selectedItem">আইটেমের নাম</div>
+        <p style="font-size: 14px; color: #666;">অর্ডার করার জন্য মাধ্যম বেছে নিন:</p>
         <div class="choice-btn">
-            <button class="btn-wa" onclick="orderWA()">WhatsApp</button>
-            <button class="btn-imo" onclick="orderImo()">Imo</button>
+            <button class="btn-wa" onclick="orderWA()">WhatsApp-এ মেসেজ দিন</button>
+            <button class="btn-imo" onclick="orderImo()">Imo-তে মেসেজ দিন</button>
         </div>
-        <button style="width:100%; margin-top:10px; padding:10px; border:none; background:#ccc; border-radius:8px;" onclick="closeModal()">বাতিল</button>
+        <button style="width:100%; margin-top:15px; padding:10px; border:none; background:#eee; color:#333; border-radius:8px; cursor:pointer;" onclick="closeModal()">বন্ধ করুন</button>
     </div>
 </div>
 
@@ -60,46 +63,51 @@
     const myNum = "971503974296";
     let currentProd = "", currentPrice = "";
 
-    // আসল এবং সুন্দর প্রোডাক্ট ইমেজ গ্যালারি
-    const productData = {
+    // সুন্দর শপিং ইমেজ এবং ফিক্সড ডাটা
+    const shopData = {
         'Dresses': [
-            { name: "Luxury Lawn 3pc", price: 155, img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500" },
-            { name: "Party Wear Silk", price: 210, img: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500" },
-            { name: "Designer Chiffon", price: 185, img: "https://images.unsplash.com/photo-1563170351-be82bc888bb4?w=500" }
+            { n: "Luxury Silk Saree", p: 155, i: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500" },
+            { n: "Designer Party Dress", p: 210, i: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=500" },
+            { n: "Lawn Cotton 3pc", p: 185, i: "https://images.unsplash.com/photo-1563170351-be82bc888bb4?w=500" }
         ],
         'Gadgets': [
-            { name: "Smart Watch S8", price: 320, img: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500" },
-            { name: "Wireless Earbuds", price: 130, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
-            { name: "Power Bank 20k", price: 95, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" }
+            { n: "Wireless Earbuds Z1", p: 130, i: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
+            { n: "Smart Watch S8 Ultra", p: 320, i: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" },
+            { n: "Portable Bluetooth Speaker", p: 145, i: "https://images.unsplash.com/photo-1608156639585-34a070a04406?w=500" }
         ],
         'Shoes': [
-            { name: "Formal Leather", price: 225, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" },
-            { name: "Casual Sneakers", price: 180, img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500" },
-            { name: "Sports Running", price: 240, img: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500" }
+            { n: "Premium Leather Shoes", p: 225, i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" },
+            { n: "Casual White Sneakers", p: 180, i: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500" },
+            { n: "Sports Running Shoes", p: 240, i: "https://images.unsplash.com/photo-1542219173-2df05d68d78e?w=500" }
+        ],
+        'Watches': [
+            { n: "Classic Gold Watch", p: 480, i: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500" },
+            { n: "Luxury Silver Edition", p: 450, i: "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=500" }
         ]
     };
 
-    const allProducts = [];
-    Object.keys(productData).forEach(cat => {
-        productData[cat].forEach((p, index) => {
-            // প্রতিটি আইটেমকে ২০০টি আইটেমের লুপে সাজানো
-            for(let i=1; i<=22; i++) {
-                allProducts.push({
+    const products = [];
+    Object.keys(shopData).forEach(cat => {
+        shopData[cat].forEach((item, index) => {
+            // প্রতিটি ক্যাটাগরিতে অনেকগুলো আইটেম তৈরি করা
+            for(let k=1; k<=15; k++) {
+                products.push({
                     cat: cat,
-                    name: `${p.name} #${i}`,
-                    price: p.price,
-                    img: p.img
+                    name: `${item.n} - ${k}`,
+                    price: item.p,
+                    img: item.i
                 });
             }
         });
     });
 
     function render(data) {
-        document.getElementById('list').innerHTML = data.map(p => `
+        const list = document.getElementById('list');
+        list.innerHTML = data.map(p => `
             <div class="card">
-                <div class="img-box"><img src="${p.img}"></div>
+                <div class="img-box"><img src="${p.img}" loading="lazy"></div>
                 <div class="info">
-                    <div style="font-weight:600; font-size:13px; height:35px; overflow:hidden;">${p.name}</div>
+                    <div class="p-name">${p.name}</div>
                     <div class="price">${p.price} AED</div>
                     <button class="buy-btn" onclick="openModal('${p.name}', '${p.price}')">অর্ডার দিন</button>
                 </div>
@@ -109,34 +117,36 @@
 
     function openModal(n, p) {
         currentProd = n; currentPrice = p;
-        document.getElementById('selectedItem').innerText = n;
+        document.getElementById('selectedItem').innerText = n + " (" + p + " AED)";
         document.getElementById('orderModal').style.display = 'flex';
     }
 
     function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
     function orderWA() {
-        const msg = `অর্ডার:\nপণ্য: ${currentProd}\nদাম: ${currentPrice} AED`;
+        const msg = `আসসালামু আলাইকুম, আমি এই পণ্যটি নিতে চাই:\n\nনাম: ${currentProd}\nদাম: ${currentPrice} AED`;
         window.open(`https://wa.me/${myNum}?text=${encodeURIComponent(msg)}`);
+        closeModal();
     }
 
     function orderImo() {
-        alert("ইমোতে অর্ডার দিতে নম্বরটি সেভ করুন: " + myNum);
+        alert("ইমোতে অর্ডার করতে নম্বরটি সেভ করুন: " + myNum);
         window.location.href = "imo://chat?number=" + myNum;
+        closeModal();
     }
 
     function setCat(c, el) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
-        render(c === "All" ? allProducts : allProducts.filter(p => p.cat === c));
+        render(c === "All" ? products : products.filter(p => p.cat === c));
     }
 
     function filter() {
         let val = document.getElementById('find').value.toLowerCase();
-        render(allProducts.filter(p => p.name.toLowerCase().includes(val)));
+        render(products.filter(p => p.name.toLowerCase().includes(val)));
     }
 
-    render(allProducts);
+    render(products);
 </script>
 
 </body>
