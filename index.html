@@ -3,33 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP | WhatsApp & Imo</title>
+    <title>AKHON SHOP | Premium Store</title>
     <style>
         :root { --main: #f57224; --bg: #f4f4f4; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 20px; }
         .nav { background: var(--main); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
-        .tabs { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 8px; border-bottom: 1px solid #ddd; }
+        .search-bar { background: white; border-radius: 25px; padding: 8px 15px; margin: 10px auto; width: 88%; display: flex; align-items: center; }
+        .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; margin-left: 8px; }
+        .tabs { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 8px; position: sticky; top: 110px; z-index: 999; border-bottom: 1px solid #ddd; }
         .tab { padding: 8px 18px; background: #f0f0f0; border-radius: 20px; white-space: nowrap; cursor: pointer; font-size: 13px; font-weight: 600; }
         .tab.active { background: var(--main); color: white; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; max-width: 900px; margin: auto; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
-        .img-box { width: 100%; height: 180px; background: #ddd; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+        .img-box { width: 100%; height: 180px; background: #eee; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
         .info { padding: 12px; }
         .price { color: var(--main); font-size: 17px; font-weight: bold; }
         .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        /* New Order Modal */
         #orderModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
         .form-box { background: white; padding: 20px; width: 85%; max-width: 400px; border-radius: 15px; text-align: center; }
-        .order-choice { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-wa { background: #25D366; color: white; flex: 1; padding: 15px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
-        .btn-imo { background: #1a73e8; color: white; flex: 1; padding: 15px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+        .choice-btn { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-wa { background: #25D366; color: white; flex: 1; padding: 15px; border-radius: 8px; border: none; font-weight: bold; }
+        .btn-imo { background: #1a73e8; color: white; flex: 1; padding: 15px; border-radius: 8px; border: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="nav"><div style="font-size: 24px; font-weight: bold;">AKHON SHOP 🛍️</div></div>
+<div class="nav">
+    <div style="font-size: 24px; font-weight: bold;">AKHON SHOP 🛍️</div>
+    <div class="search-bar">🔍 <input type="text" id="find" onkeyup="filter()" placeholder="সার্চ করুন..."></div>
+</div>
 
 <div class="tabs">
     <div class="tab active" onclick="setCat('All', this)">All</div>
@@ -42,41 +46,60 @@
 
 <div id="orderModal">
     <div class="form-box">
-        <h3 id="selectedItem">অর্ডার করার মাধ্যম বেছে নিন</h3>
-        <p style="font-size: 14px; color: #666;">আপনি কিভাবে যোগাযোগ করতে চান?</p>
-        <div class="order-choice">
-            <button class="btn-wa" onclick="orderWhatsApp()">WhatsApp</button>
+        <h3 id="selectedItem">অর্ডার কনফার্ম করুন</h3>
+        <p>যোগাযোগের মাধ্যম বেছে নিন:</p>
+        <div class="choice-btn">
+            <button class="btn-wa" onclick="orderWA()">WhatsApp</button>
             <button class="btn-imo" onclick="orderImo()">Imo</button>
         </div>
-        <button style="width:100%; margin-top:15px; padding:10px; border:none; background:#eee; border-radius:8px;" onclick="closeModal()">বাতিল</button>
+        <button style="width:100%; margin-top:10px; padding:10px; border:none; background:#ccc; border-radius:8px;" onclick="closeModal()">বাতিল</button>
     </div>
 </div>
 
 <script>
-    const myNumber = "971503974296"; // আপনার হোয়াটসঅ্যাপ এবং ইমো নম্বর
+    const myNum = "971503974296";
     let currentProd = "", currentPrice = "";
 
-    const products = [];
-    const cats = ['Dresses', 'Gadgets', 'Shoes'];
-    
-    // ২০০টি ইউনিক আইটেম জেনারেট করা
-    for (let i = 1; i <= 200; i++) {
-        let cat = cats[i % cats.length];
-        products.push({
-            cat: cat,
-            name: `${cat} Premium Item #${100 + i}`,
-            price: 150 + (i % 50),
-            img: `https://loremflickr.com/400/400/${cat.toLowerCase()}?lock=${i}`
-        });
-    }
+    // আসল এবং সুন্দর প্রোডাক্ট ইমেজ গ্যালারি
+    const productData = {
+        'Dresses': [
+            { name: "Luxury Lawn 3pc", price: 155, img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500" },
+            { name: "Party Wear Silk", price: 210, img: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500" },
+            { name: "Designer Chiffon", price: 185, img: "https://images.unsplash.com/photo-1563170351-be82bc888bb4?w=500" }
+        ],
+        'Gadgets': [
+            { name: "Smart Watch S8", price: 320, img: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500" },
+            { name: "Wireless Earbuds", price: 130, img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500" },
+            { name: "Power Bank 20k", price: 95, img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" }
+        ],
+        'Shoes': [
+            { name: "Formal Leather", price: 225, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" },
+            { name: "Casual Sneakers", price: 180, img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500" },
+            { name: "Sports Running", price: 240, img: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=500" }
+        ]
+    };
 
-    function render(list) {
-        const grid = document.getElementById('list');
-        grid.innerHTML = list.map(p => `
+    const allProducts = [];
+    Object.keys(productData).forEach(cat => {
+        productData[cat].forEach((p, index) => {
+            // প্রতিটি আইটেমকে ২০০টি আইটেমের লুপে সাজানো
+            for(let i=1; i<=22; i++) {
+                allProducts.push({
+                    cat: cat,
+                    name: `${p.name} #${i}`,
+                    price: p.price,
+                    img: p.img
+                });
+            }
+        });
+    });
+
+    function render(data) {
+        document.getElementById('list').innerHTML = data.map(p => `
             <div class="card">
                 <div class="img-box"><img src="${p.img}"></div>
                 <div class="info">
-                    <div style="font-weight:600; font-size:13px;">${p.name}</div>
+                    <div style="font-weight:600; font-size:13px; height:35px; overflow:hidden;">${p.name}</div>
                     <div class="price">${p.price} AED</div>
                     <button class="buy-btn" onclick="openModal('${p.name}', '${p.price}')">অর্ডার দিন</button>
                 </div>
@@ -92,27 +115,28 @@
 
     function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
-    function orderWhatsApp() {
-        const msg = `আসসালামু আলাইকুম, আমি এই পণ্যটি অর্ডার করতে চাই:\nনাম: ${currentProd}\nদাম: ${currentPrice} AED`;
-        window.open(`https://wa.me/${myNumber}?text=${encodeURIComponent(msg)}`);
-        closeModal();
+    function orderWA() {
+        const msg = `অর্ডার:\nপণ্য: ${currentProd}\nদাম: ${currentPrice} AED`;
+        window.open(`https://wa.me/${myNum}?text=${encodeURIComponent(msg)}`);
     }
 
     function orderImo() {
-        alert("আপনার ইমোতে মেসেজ দিতে নম্বরটি সেভ করুন: " + myNumber);
-        // ইমো অ্যাপ খোলার চেষ্টা করবে (সব ডিভাইসে কাজ নাও করতে পারে)
-        window.location.href = "imo://chat?number=" + myNumber;
-        closeModal();
+        alert("ইমোতে অর্ডার দিতে নম্বরটি সেভ করুন: " + myNum);
+        window.location.href = "imo://chat?number=" + myNum;
     }
 
     function setCat(c, el) {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
-        const filtered = c === "All" ? products : products.filter(p => p.cat === c);
-        render(filtered);
+        render(c === "All" ? allProducts : allProducts.filter(p => p.cat === c));
     }
 
-    render(products);
+    function filter() {
+        let val = document.getElementById('find').value.toLowerCase();
+        render(allProducts.filter(p => p.name.toLowerCase().includes(val)));
+    }
+
+    render(allProducts);
 </script>
 
 </body>
