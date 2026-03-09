@@ -3,146 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP | Pakistani Collection</title>
+    <title>AKHON SHOP | Exclusive Collection</title>
     <style>
         body { font-family: 'Arial', sans-serif; background-color: #f4f4f6; margin: 0; padding: 0; }
-        .header { background: #f85606; color: white; text-align: center; padding: 15px; font-size: 20px; font-weight: bold; }
+        .header { background: #f85606; color: white; text-align: center; padding: 15px; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 100; }
+        .section-title { background: #333; color: #fff; padding: 10px; margin-top: 20px; text-align: center; font-size: 18px; }
         
         .daraz-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-        .daraz-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; display: flex; flex-direction: column; }
-        .discount-badge { position: absolute; top: 5px; left: 5px; background: #f85606; color: #fff; padding: 2px 6px; font-size: 10px; font-weight: bold; border-radius: 3px; z-index: 1; }
-        .daraz-card img { width: 100%; height: 210px; object-fit: cover; }
+        .daraz-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .daraz-card img { width: 100%; height: 220px; object-fit: cover; }
         
         .info { padding: 8px; flex-grow: 1; }
-        .title { font-size: 12px; color: #212121; height: 32px; overflow: hidden; margin-bottom: 5px; }
+        .title { font-size: 12px; color: #212121; height: 32px; overflow: hidden; margin-bottom: 5px; font-weight: bold; }
         .price { color: #f85606; font-size: 15px; font-weight: bold; }
-        .old-price { font-size: 10px; color: #9e9e9e; text-decoration: line-through; margin-left: 4px; }
         
-        .buy-btn { background: #f85606; color: #fff; border: none; width: 100%; padding: 10px; font-weight: bold; cursor: pointer; font-size: 13px; border-radius: 0 0 8px 8px; }
+        .buy-btn { background: #f85606; color: #fff; border: none; width: 100%; padding: 10px; font-weight: bold; cursor: pointer; border-radius: 0 0 8px 8px; }
 
-        /* Order Popup */
-        #orderModal { display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
-        .modal-content { background-color: #fff; margin: 20% auto; padding: 20px; border-radius: 12px; width: 85%; max-width: 380px; }
+        /* Modal */
+        #orderModal { display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: #fff; margin: 15% auto; padding: 20px; border-radius: 12px; width: 85%; max-width: 350px; }
         .modal-content input, .modal-content textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .confirm-btn { background-color: #25D366; color: white; padding: 15px; border: none; width: 100%; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
-        .close-btn { background-color: #999; color: white; padding: 10px; border: none; width: 100%; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+        .confirm-btn { background: #25D366; color: white; padding: 15px; border: none; width: 100%; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="header">AKHON SHOP - নতুন কালেকশন</div>
+<div class="header">AKHON SHOP</div>
 
+<div class="section-title">পাকিস্তানি থ্রি পিস কালেকশন</div>
 <div class="daraz-container">
-    
-    <div class="daraz-card">
-        <div class="discount-badge">-40%</div>
-        <img src="01_14_7f0d0c15-1ea6-436f-9004-f38be4fef7f1.jpg">
-        <div class="info">
-            <div class="title">পাকিস্তানি থ্রি পিস মডেল ১</div>
-            <div class="price">125 AED <span class="old-price">210 AED</span></div>
-        </div>
-        <button class="buy-btn" onclick="openOrderModal('মডেল ১', '125 AED')">অর্ডার করুন</button>
-    </div>
+    <script>
+        const pakImages = [
+            "01_14_7f0d0c15-1ea6-436f-9004-f38be4fef7f1.jpg",
+            "01_21_a2924604-3633-4543-a00e-04a886819209.jpg",
+            "01_23_09c7d9ef-d6f1-4fe0-bd17-36d1d4a89fce.jpg",
+            "Premium3PieceLawnSuit-PakistaniDress-Malbusaat1.jpeg",
+            "laiba-am-vol-186-designer-pakistani-3-piece-suit-new-arrivals-0-2023-05-23_15_01_25.jpeg",
+            "product-jpeg.jpg",
+            "images (11).jpeg",
+            "images (12).jpeg",
+            "safa-fashion-fab-1144-designer-3-piece-pakistani-suit-new-designs-2-2023-09-18_14_02_50.jpg"
+        ];
+        
+        pakImages.forEach((img, index) => {
+            document.write(`
+                <div class="daraz-card">
+                    <img src="${img}">
+                    <div class="info">
+                        <div class="title">পাকিস্তানি থ্রি পিস - মডেল ${index + 1}</div>
+                        <div class="price">135 AED</div>
+                    </div>
+                    <button class="buy-btn" onclick="openOrderModal('পাকিস্তানি মডেল ${index + 1}', '135 AED')">অর্ডার করুন</button>
+                </div>
+            `);
+        });
+    </script>
+</div>
 
-    <div class="daraz-card">
-        <div class="discount-badge">-35%</div>
-        <img src="01_21_a2924604-3633-4543-a00e-04a886819209.jpg">
-        <div class="info">
-            <div class="title">পাকিস্তানি থ্রি পিস মডেল ২</div>
-            <div class="price">135 AED <span class="old-price">220 AED</span></div>
-        </div>
-        <button class="buy-btn" onclick="openOrderModal('মডেল ২', '135 AED')">অর্ডার করুন</button>
-    </div>
-
-    <div class="daraz-card">
-        <div class="discount-badge">-30%</div>
-        <img src="01_23_09c7d9ef-d6f1-4fe0-bd17-36d1d4a89fce.jpg">
-        <div class="info">
-            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৩</div>
-            <div class="price">145 AED <span class="old-price">215 AED</span></div>
-        </div>
-        <button class="buy-btn" onclick="openOrderModal('মডেল ৩', '145 AED')">অর্ডার করুন</button>
-    </div>
-
-    <div class="daraz-card">
-        <div class="discount-badge">-25%</div>
-        <img src="images (11).jpeg">
-        <div class="info">
-            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৪</div>
-            <div class="price">155 AED <span class="old-price">230 AED</span></div>
-        </div>
-        <button class="buy-btn" onclick="openOrderModal('মডেল ৪', '155 AED')">অর্ডার করুন</button>
-    </div>
-
-    <div class="daraz-card">
-        <div class="discount-badge">-20%</div>
-        <img src="images (12).jpeg">
-        <div class="info">
-            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৫</div>
-            <div class="price">165 AED <span class="old-price">240 AED</span></div>
-        </div>
-        <button class="buy-btn" onclick="openOrderModal('মডেল ৫', '165 AED')">অর্ডার করুন</button>
-    </div>
-
-    <div class="daraz-card">
-        <div class="discount-badge">HOT</div>
-        <img src="product-jpeg.jpg">
-        <div class="info">
-            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৬</div>
-            <div class="price">175 AED <span class="old-price">250 AED</span></div>
-        </div>
-        <button class="buy-btn" onclick="openOrderModal('মডেল ৬', '175 AED')">অর্ডার করুন</button>
-    </div>
-
+<div class="section-title">ইন্ডিয়ান থ্রি পিস কালেকশন</div>
+<div class="daraz-container">
+    <script>
+        const indImages = [
+            "3e1d6e027ab3f735ffe48a4462d4f574.jpg",
+            "1759157146_L_4.jpg",
+            "1759157146_L_1.jpg",
+            "1759157146_L_5.jpg",
+            "1759157146_L_6.jpg",
+            "2025-09-09-68bff18856568.png",
+            "9eed34cdc6d0719e1bdf691cbe941c69.jpg_960x960q80.jpg_.webp",
+            "15a71d187bd4fc7d79eaa94ab8a1d00b.jpg_960x960q80.jpg_.webp",
+            "523c4a262f8c79c5d5e6565ba4352248.jpg_960x960q80.jpg_.webp",
+            "324b4ed0182a57adcc33916093b50a3c.jpg_960x960q80.jpg_.webp"
+        ];
+        
+        indImages.forEach((img, index) => {
+            document.write(`
+                <div class="daraz-card">
+                    <img src="${img}">
+                    <div class="info">
+                        <div class="title">ইন্ডিয়ান থ্রি পিস - মডেল ${index + 1}</div>
+                        <div class="price">120 AED</div>
+                    </div>
+                    <button class="buy-btn" onclick="openOrderModal('ইন্ডিয়ান মডেল ${index + 1}', '120 AED')">অর্ডার করুন</button>
+                </div>
+            `);
+        });
+    </script>
 </div>
 
 <div id="orderModal">
     <div class="modal-content">
-        <h3 id="modalProductName" style="text-align: center;"></h3>
+        <h3 id="modalProductName"></h3>
         <input type="text" id="custName" placeholder="আপনার নাম">
         <input type="text" id="custNumber" placeholder="মোবাইল নম্বর">
-        <textarea id="custAddress" placeholder="পুরো ঠিকানা দিন"></textarea>
+        <textarea id="custAddress" placeholder="ঠিকানা"></textarea>
         <button class="confirm-btn" onclick="sendToWhatsApp()">WhatsApp-এ অর্ডার দিন</button>
-        <button class="close-btn" onclick="closeOrderModal()">বাতিল</button>
+        <button style="margin-top:10px; width:100%; border:none; background:#eee; padding:10px; border-radius:8px;" onclick="closeOrderModal()">বাতিল</button>
     </div>
 </div>
 
 <script>
-    var currentProduct = "";
-    var currentPrice = "";
-
-    function openOrderModal(name, price) {
-        currentProduct = name;
-        currentPrice = price;
-        document.getElementById('modalProductName').innerText = "অর্ডার: " + name;
+    let pName = "", pPrice = "";
+    function openOrderModal(n, p) {
+        pName = n; pPrice = p;
+        document.getElementById('modalProductName').innerText = n;
         document.getElementById('orderModal').style.display = "block";
     }
-
-    function closeOrderModal() {
-        document.getElementById('orderModal').style.display = "none";
-    }
-
+    function closeOrderModal() { document.getElementById('orderModal').style.display = "none"; }
     function sendToWhatsApp() {
-        var name = document.getElementById('custName').value;
-        var phone = document.getElementById('custNumber').value;
-        var address = document.getElementById('custAddress').value;
-        var whatsappNumber = "971503974296"; 
-
-        if(name == "" || phone == "" || address == "") {
-            alert("দয়া করে সব তথ্য পূরণ করুন!");
-            return;
-        }
-
-        var message = "নতুন অর্ডার - AKHON SHOP\n" +
-                      "------------------------\n" +
-                      "মডেল: " + currentProduct + "\n" +
-                      "দাম: " + currentPrice + "\n" +
-                      "কাস্টমার: " + name + "\n" +
-                      "মোবাইল: " + phone + "\n" +
-                      "ঠিকানা: " + address;
-
-        var url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
-        window.open(url, '_blank');
+        const name = document.getElementById('custName').value;
+        const phone = document.getElementById('custNumber').value;
+        const addr = document.getElementById('custAddress').value;
+        if(!name || !phone || !addr) return alert("সব তথ্য দিন");
+        const msg = `নতুন অর্ডার\nপণ্য: ${pName}\nদাম: ${pPrice}\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${addr}`;
+        window.open(`https://wa.me/971503974296?text=${encodeURIComponent(msg)}`, '_blank');
     }
 </script>
 
