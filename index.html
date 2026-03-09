@@ -1,139 +1,102 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP | Unique Products</title>
-    <style>
-        :root { --main: #f57224; --bg: #f4f4f4; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding-bottom: 20px; }
-        .nav { background: var(--main); color: white; padding: 15px; position: sticky; top: 0; z-index: 1000; text-align: center; }
-        .search-bar { background: white; border-radius: 25px; padding: 8px 15px; margin: 10px auto; width: 88%; display: flex; align-items: center; }
-        .search-bar input { border: none; outline: none; width: 100%; font-size: 14px; margin-left: 8px; }
-        .tabs { display: flex; overflow-x: auto; background: white; padding: 10px; gap: 8px; position: sticky; top: 110px; z-index: 999; border-bottom: 1px solid #ddd; }
-        .tab { padding: 8px 18px; background: #f0f0f0; border-radius: 20px; white-space: nowrap; cursor: pointer; font-size: 13px; font-weight: 600; }
-        .tab.active { background: var(--main); color: white; }
-        .container { padding: 10px; max-width: 900px; margin: auto; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
-        .img-box { width: 100%; height: 180px; background: #ddd; overflow: hidden; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
-        .info { padding: 12px; flex-grow: 1; }
-        .p-name { font-size: 13px; font-weight: 600; color: #333; height: 36px; overflow: hidden; margin-bottom: 5px; }
-        .price { color: var(--main); font-size: 17px; font-weight: bold; }
-        .buy-btn { background: var(--main); color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        #orderModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; }
-        .form-box { background: white; padding: 20px; width: 85%; max-width: 400px; border-radius: 15px; }
-        .form-box input, .form-box textarea { width: 93%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; }
-        .submit-btn { background: #25D366; color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-    </style>
-</head>
-<body>
-
-<div class="nav">
-    <div style="font-size: 24px; font-weight: bold;">AKHON SHOP 🛍️</div>
-    <div class="search-bar">🔍 <input type="text" id="find" onkeyup="filter()" placeholder="আইটেম সার্চ করুন..."></div>
-</div>
-
-<div class="tabs">
-    <div class="tab active" onclick="setCat('All', this)">All</div>
-    <div class="tab" onclick="setCat('Dresses', this)">Dresses 👗</div>
-    <div class="tab" onclick="setCat('Gadgets', this)">Gadgets 📱</div>
-    <div class="tab" onclick="setCat('Shoes', this)">Shoes 👟</div>
-    <div class="tab" onclick="setCat('Watches', this)">Watches ⌚</div>
-</div>
-
-<div class="container">
-    <div class="grid" id="list"></div>
-</div>
-
-<div id="orderModal">
-    <div class="form-box">
-        <h3 id="selectedItem">অর্ডার কনফার্ম করুন</h3>
-        <input type="text" id="cusName" placeholder="আপনার নাম">
-        <input type="tel" id="cusPhone" placeholder="মোবাইল নম্বর">
-        <textarea id="cusAddress" placeholder="পুরো ঠিকানা দিন"></textarea>
-        <button class="submit-btn" onclick="sendToWhatsApp()">WhatsApp-এ অর্ডার দিন</button>
-        <button style="width:100%; margin-top:5px; padding:10px; border:none; background:#999; color:white; border-radius:8px; cursor:pointer;" onclick="closeModal()">বাতিল</button>
+<div id="orderModal" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); font-family: Arial, sans-serif;">
+    <div style="background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 12px; width: 85%; max-width: 380px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+        <h3 id="modalProductName" style="text-align: center; color: #333; font-size: 18px; margin-bottom: 15px;"></h3>
+        <input type="text" id="custName" placeholder="আপনার নাম" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;">
+        <input type="text" id="custNumber" placeholder="মোবাইল নম্বর" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;">
+        <textarea id="custAddress" placeholder="পুরো ঠিকানা দিন" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; height: 70px;"></textarea>
+        <button onclick="sendToWhatsApp()" style="background-color: #25D366; color: white; padding: 14px; border: none; width: 100%; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer;">WhatsApp-এ অর্ডার দিন</button>
+        <button onclick="closeOrderModal()" style="background-color: #777; color: white; padding: 10px; border: none; width: 100%; border-radius: 6px; cursor: pointer; margin-top: 8px;">বাতিল</button>
     </div>
 </div>
 
+<section style="padding: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: #f4f4f4;">
+    
+    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="images/01_23_09c7d9ef-d6f1-4fe0-bd17-36d1d4a89fce.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
+        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ১</h4>
+        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">120 AED</p>
+        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ১', '120 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
+    </div>
+
+    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="images/01_14_7f0d0c15-1ea6-436f-9004-f38be4fef7f1.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
+        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ২</h4>
+        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">135 AED</p>
+        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ২', '135 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
+    </div>
+
+    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="images/01_21_a2924604-3633-4543-a00e-04a886819209.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
+        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৩</h4>
+        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">150 AED</p>
+        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৩', '150 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
+    </div>
+
+    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="images/images (12).jpeg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
+        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৪</h4>
+        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">165 AED</p>
+        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৪', '165 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
+    </div>
+
+    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="images/Premium3PieceLawnSuit-PakistaniDress-Malbusaat1.jpeg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
+        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৫</h4>
+        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">180 AED</p>
+        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৫', '180 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
+    </div>
+
+    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="images/safa-fashion-fab-1144-designer-3-piece-pakistani-suit-new-designs-2-2023-09-18_14_02_50.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
+        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৬</h4>
+        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">190 AED</p>
+        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৬', '190 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
+    </div>
+
+    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <img src="images/laiba-am-vol-186-designer-pakistani-3-piece-suit-new-arrivals-0-2023-05-23_15_01_25.jpeg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
+        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৭</h4>
+        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">200 AED</p>
+        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৭', '200 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
+    </div>
+
+</section>
+
 <script>
-    const whatsappNum = "971503974296";
-    let currentCat = "All";
-    let currentProd = "", currentPrice = "";
+    var currentProduct = "";
+    var currentPrice = "";
 
-    const catsData = {
-        'Dresses': { name: "Luxury Dress", price: 185, keyword: "fashion,dress" },
-        'Gadgets': { name: "Smart Gadget", price: 310, keyword: "tech,gadget" },
-        'Shoes': { name: "Premium Shoes", price: 240, keyword: "shoes,sneakers" },
-        'Watches': { name: "Classic Watch", price: 470, keyword: "watch,luxury" }
-    };
-
-    const products = [];
-    const cats = Object.keys(catsData);
-
-    // ২০০টি ইউনিক ছবি ও ফিক্সড দাম জেনারেট করা
-    for (let i = 1; i <= 200; i++) {
-        let catName = cats[i % cats.length];
-        let info = catsData[catName];
-        
-        products.push({
-            cat: catName,
-            name: `${info.name} - Model ${1000 + i}`,
-            price: info.price + (i % 20), // সামান্য দামের পার্থক্য (ফিক্সড)
-            // প্রতিটির জন্য সম্পূর্ণ আলাদা ছবি জেনারেট হবে seed ব্যবহার করে
-            img: `https://loremflickr.com/400/400/${info.keyword}?lock=${i}`
-        });
+    function openOrderModal(name, price) {
+        currentProduct = name;
+        currentPrice = price;
+        document.getElementById('modalProductName').innerText = name + " (" + price + ")";
+        document.getElementById('orderModal').style.display = "block";
     }
 
-    function render(list) {
-        const grid = document.getElementById('list');
-        grid.innerHTML = list.map(p => `
-            <div class="card">
-                <div class="img-box"><img src="${p.img}" alt="Product"></div>
-                <div class="info">
-                    <div class="p-name">${p.name}</div>
-                    <div class="price">${p.price} AED</div>
-                    <button class="buy-btn" onclick="openModal('${p.name}', '${p.price}')">অর্ডার দিন</button>
-                </div>
-            </div>
-        `).join('');
+    function closeOrderModal() {
+        document.getElementById('orderModal').style.display = "none";
     }
-
-    function openModal(n, p) {
-        currentProd = n; currentPrice = p;
-        document.getElementById('selectedItem').innerText = n + " (" + p + " AED)";
-        document.getElementById('orderModal').style.display = 'flex';
-    }
-
-    function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
     function sendToWhatsApp() {
-        const name = document.getElementById('cusName').value;
-        const phone = document.getElementById('cusPhone').value;
-        const addr = document.getElementById('cusAddress').value;
-        if(!name || !phone || !addr) return alert("সব তথ্য দিন!");
-        const msg = `অর্ডার বিবরণ:\nআইটেম: ${currentProd}\nদাম: ${currentPrice} AED\nনাম: ${name}\nফোন: ${phone}\nঠিকানা: ${addr}`;
-        window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`);
-        closeModal();
-    }
+        var name = document.getElementById('custName').value;
+        var phone = document.getElementById('custNumber').value;
+        var address = document.getElementById('custAddress').value;
+        var whatsappNumber = "971503974296"; 
 
-    function setCat(c, el) {
-        currentCat = c;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        el.classList.add('active');
-        filter();
-    }
+        if(name == "" || phone == "" || address == "") {
+            alert("সব তথ্য পূরণ করুন!");
+            return;
+        }
 
-    function filter() {
-        let txt = document.getElementById('find').value.toLowerCase();
-        let filtered = products.filter(p => (currentCat === "All" || p.cat === currentCat) && p.name.toLowerCase().includes(txt));
-        render(filtered);
-    }
+        var message = "নতুন অর্ডার - AKHON SHOP\n" +
+                      "------------------------\n" +
+                      "প্রোডাক্ট: " + currentProduct + "\n" +
+                      "দাম: " + currentPrice + "\n" +
+                      "কাস্টমার: " + name + "\n" +
+                      "মোবাইল: " + phone + "\n" +
+                      "ঠিকানা: " + address;
 
-    render(products);
+        var url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
+        window.open(url, '_blank');
+    }
 </script>
-
-</body>
-</html>
