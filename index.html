@@ -3,113 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKHON SHOP | Exclusive Collection</title>
+    <title>AKHON SHOP | Luxury Collection</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
         .header { background: #f85606; color: white; text-align: center; padding: 15px; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .section-title { background: #333; color: #fff; padding: 12px; margin-top: 10px; text-align: center; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .daraz-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-        .daraz-card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; transition: 0.3s; }
-        .daraz-card img { width: 100%; height: 230px; object-fit: cover; background: #f9f9f9; }
+        .section-title { background: #333; color: #fff; padding: 12px; margin-top: 10px; text-align: center; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
+        .card { background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; display: flex; flex-direction: column; }
+        .card img { width: 100%; height: 210px; object-fit: cover; background: #f9f9f9; }
         .info { padding: 10px; flex-grow: 1; }
-        .title { font-size: 13px; color: #212121; height: 36px; overflow: hidden; margin-bottom: 5px; font-weight: 600; line-height: 1.4; }
-        .price { color: #f85606; font-size: 16px; font-weight: bold; }
-        .buy-btn { background: #f85606; color: #fff; border: none; width: 100%; padding: 12px; font-weight: bold; cursor: pointer; border-radius: 0 0 8px 8px; font-size: 14px; text-transform: uppercase; }
-        
-        /* Modal Style */
-        #orderModal { display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(3px); }
-        .modal-content { background: #fff; margin: 15% auto; padding: 25px; border-radius: 15px; width: 85%; max-width: 380px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .modal-content h3 { text-align: center; color: #f85606; margin-top: 0; }
-        .modal-content input, .modal-content textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-        .confirm-btn { background: #25D366; color: white; padding: 15px; border: none; width: 100%; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
-        .cancel-btn { margin-top:10px; width:100%; border:none; background:#eee; padding:10px; border-radius:8px; cursor:pointer; font-weight: bold; color: #666; }
+        .title { font-size: 12px; color: #212121; height: 32px; overflow: hidden; margin-bottom: 5px; font-weight: 600; }
+        .price { color: #f85606; font-size: 15px; font-weight: bold; }
+
+        /* Product Details Modal (Full Screen) */
+        #detailsModal { display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: white; overflow-y: auto; }
+        .close-btn { position: absolute; top: 15px; left: 15px; font-size: 22px; background: rgba(0,0,0,0.5); color: white; border-radius: 50%; width: 35px; height: 35px; text-align: center; line-height: 35px; cursor: pointer; z-index: 101; }
+        .det-img { width: 100%; height: 450px; object-fit: cover; }
+        .det-body { padding: 20px; }
+        .det-name { font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+        .det-price { font-size: 26px; color: #f85606; font-weight: bold; margin-bottom: 20px; }
+        .bio-box { background: #f8f9fa; padding: 15px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 25px; }
+        .bio-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+        .bio-row:last-child { border: none; }
+        .order-btn { background: #f85606; color: white; border: none; width: 100%; padding: 16px; font-size: 18px; font-weight: bold; border-radius: 10px; cursor: pointer; text-transform: uppercase; }
+
+        /* Order Form Modal */
+        #orderModal { display:none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .form-box { background: white; margin: 15% auto; padding: 25px; border-radius: 15px; width: 85%; max-width: 380px; }
+        .form-box input, .form-box textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
 <div class="header">AKHON SHOP</div>
 
-<div class="section-title">Pakistani Three Piece Collection</div>
-<div class="daraz-container" id="pakSection"></div>
+<div class="section-title">Pakistani Collection</div>
+<div class="container" id="pakSection"></div>
 
-<div class="section-title">Indian Three Piece Collection</div>
-<div class="daraz-container" id="indSection"></div>
+<div class="section-title">Indian Collection</div>
+<div class="container" id="indSection"></div>
 
 <script>
-    // Pakistani Files & Varied Prices (140 to 180 AED)
-    const pakData = [
-        { img: "01_14_7f0d0c15-1ea6-436f-9004-f38be4fef7f1.jpg", price: "145" },
-        { img: "01_21_a2924604-3633-4543-a00e-04a886819209.jpg", price: "150" },
-        { img: "01_23_09c7d9ef-d6f1-4fe0-bd17-36d1d4a89fce.jpg", price: "155" },
-        { img: "Premium3PieceLawnSuit-PakistaniDress-Malbusaat1.jpeg", price: "175" },
-        { img: "laiba-am-vol-186-designer-pakistani-3-piece-suit-new-arrivals-0-2023-05-23_15_01_25.jpeg", price: "180" },
-        { img: "product-jpeg.jpg", price: "165" },
-        { img: "images (11).jpeg", price: "140" },
-        { img: "images (12).jpeg", price: "145" },
-        { img: "safa-fashion-fab-1144-designer-3-piece-pakistani-suit-new-designs-2-2023-09-18_14_02_50.jpg", price: "170" }
+    // ৯টি পাকিস্তানি ড্রেস (এলোমেলো দাম ও ডিটেইলস)
+    const pakProducts = [
+        { img: "01_14_7f0d0c15-1ea6-436f-9004-f38be4fef7f1.jpg", price: "148", fabric: "Lawn Cotton", work: "Embroidery", kameez: "48 Inch", orna: "Chiffon", salwar: "Cotton" },
+        { img: "01_21_a2924604-3633-4543-a00e-04a886819209.jpg", price: "155", fabric: "Digital Lawn", work: "Printed", kameez: "46 Inch", orna: "Mal-mal", salwar: "Soft Cotton" },
+        { img: "01_23_09c7d9ef-d6f1-4fe0-bd17-36d1d4a89fce.jpg", price: "162", fabric: "Luxury Cotton", work: "Heavy Embroidery", kameez: "50 Inch", orna: "Silk Mix", salwar: "Lawn" },
+        { img: "Premium3PieceLawnSuit-PakistaniDress-Malbusaat1.jpeg", price: "178", fabric: "Premium Lawn", work: "Exclusive Work", kameez: "48 Inch", orna: "Lawn Dupatta", salwar: "Cotton" },
+        { img: "laiba-am-vol-186-designer-pakistani-3-piece-suit-new-arrivals-0-2023-05-23_15_01_25.jpeg", price: "180", fabric: "Designer Fabric", work: "Zari Work", kameez: "48 Inch", orna: "Chiffon", salwar: "Silk" },
+        { img: "product-jpeg.jpg", price: "135", fabric: "Cotton", work: "Basic Work", kameez: "46 Inch", orna: "Cotton", salwar: "Cotton" },
+        { img: "images (11).jpeg", price: "142", fabric: "Lawn", work: "Full Printed", kameez: "47 Inch", orna: "Chiffon", salwar: "Lawn" },
+        { img: "images (12).jpeg", price: "158", fabric: "Cotton Silk", work: "Hand Work", kameez: "48 Inch", orna: "Silk", salwar: "Soft Silk" },
+        { img: "safa-fashion-fab-1144-designer-3-piece-pakistani-suit-new-designs-2-2023-09-18_14_02_50.jpg", price: "170", fabric: "Designer Lawn", work: "Stone Work", kameez: "49 Inch", orna: "Net", salwar: "Lawn" }
     ];
 
-    // Indian Files & Varied Prices (120 to 160 AED)
-    const indData = [
-        { img: "3e1d6e027ab3f735ffe48a4462d4f574.jpg", price: "120" },
-        { img: "1759157146_L_4.jpg", price: "125" },
-        { img: "1759157146_L_1.jpg", price: "130" },
-        { img: "1759157146_L_5.jpg", price: "135" },
-        { img: "1759157146_L_6.jpg", price: "140" },
-        { img: "2025-09-09-68bff18856568.png", price: "145" },
-        { img: "9eed34cdc6d0719e1bdf691cbe941c69.jpg_960x960q80.jpg_.webp", price: "120" },
-        { img: "15a71d187bd4fc7d79eaa94ab8a1d00b.jpg_960x960q80.jpg_.webp", price: "130" },
-        { img: "523c4a262f8c79c5d5e6565ba4352248.jpg_960x960q80.jpg_.webp", price: "150" },
-        { img: "324b4ed0182a57adcc33916093b50a3c.jpg_960x960q80.jpg_.webp", price: "160" },
-        { img: "3e1d6e027ab3f735ffe48a4462d4f574.jpg", price: "125" }
+    // ১১টি ইন্ডিয়ান ড্রেস (এলোমেলো দাম ও ডিটেইলস)
+    const indProducts = [
+        { img: "3e1d6e027ab3f735ffe48a4462d4f574.jpg", price: "120", fabric: "Georgette", work: "Mirror Work", kameez: "44 Inch", orna: "Net", salwar: "Santoon" },
+        { img: "1759157146_L_4.jpg", price: "128", fabric: "Soft Silk", work: "Floral Print", kameez: "46 Inch", orna: "Banarasi", salwar: "Silk" },
+        { img: "1759157146_L_1.jpg", price: "135", fabric: "Cotton Mix", work: "Traditional", kameez: "45 Inch", orna: "Mal-mal", salwar: "Cotton" },
+        { img: "1759157146_L_5.jpg", price: "144", fabric: "Chiffon", work: "Embroidery", kameez: "46 Inch", orna: "Chiffon", salwar: "Crepe" },
+        { img: "1759157146_L_6.jpg", price: "152", fabric: "Silk", work: "Heavy Zari", kameez: "48 Inch", orna: "Silk Dupatta", salwar: "Silk" },
+        { img: "2025-09-09-68bff18856568.png", price: "130", fabric: "Linen", work: "Lace Work", kameez: "46 Inch", orna: "Organza", salwar: "Linen" },
+        { img: "9eed34cdc6d0719e1bdf691cbe941c69.jpg_960x960q80.jpg_.webp", price: "125", fabric: "Cotton", work: "Casual Print", kameez: "44 Inch", orna: "Cotton", salwar: "Cotton" },
+        { img: "15a71d187bd4fc7d79eaa94ab8a1d00b.jpg_960x960q80.jpg_.webp", price: "138", fabric: "Viscose", work: "Beads Work", kameez: "46 Inch", orna: "Silk", salwar: "Cotton" },
+        { img: "523c4a262f8c79c5d5e6565ba4352248.jpg_960x960q80.jpg_.webp", price: "149", fabric: "Silk Blend", work: "Gotta Patti", kameez: "47 Inch", orna: "Net", salwar: "Santoon" },
+        { img: "324b4ed0182a57adcc33916093b50a3c.jpg_960x960q80.jpg_.webp", price: "155", fabric: "Heavy Silk", work: "Designer", kameez: "48 Inch", orna: "Chiffon", salwar: "Silk" },
+        { img: "3e1d6e027ab3f735ffe48a4462d4f574.jpg", price: "122", fabric: "Georgette", work: "Sequins", kameez: "45 Inch", orna: "Silk", salwar: "Santoon" }
     ];
 
-    function render(data, id, type) {
-        const div = document.getElementById(id);
-        data.forEach((item, i) => {
-            div.innerHTML += `
-                <div class="daraz-card">
-                    <img src="${item.img}" alt="${type}">
+    function render(data, containerId, label) {
+        const grid = document.getElementById(containerId);
+        data.forEach((p, i) => {
+            grid.innerHTML += `
+                <div class="card" onclick="openDetails('${label} Model ${i+1}', '${p.price}', '${p.img}', '${p.fabric}', '${p.work}', '${p.kameez}', '${p.orna}', '${p.salwar}')">
+                    <img src="${p.img}">
                     <div class="info">
-                        <div class="title">${type} - Model ${i+1}</div>
-                        <div class="price">${item.price} AED</div>
+                        <div class="title">${label} Dress - Model ${i+1}</div>
+                        <div class="price">${p.price} AED</div>
                     </div>
-                    <button class="buy-btn" onclick="openModal('${type} Model ${i+1}', '${item.price} AED')">Order Now</button>
                 </div>`;
         });
     }
 
-    render(pakData, 'pakSection', 'Pakistani Dress');
-    render(indData, 'indSection', 'Indian Dress');
+    render(pakProducts, 'pakSection', 'Pakistani');
+    render(indProducts, 'indSection', 'Indian');
 
-    let orderDetails = "";
-    function openModal(name, price) {
-        orderDetails = name + " (" + price + ")";
-        document.getElementById('modalProductName').innerText = "Order: " + name;
-        document.getElementById('orderModal').style.display = "block";
+    let orderTitle = "";
+    function openDetails(n, p, img, fab, wrk, kam, orn, sal) {
+        orderTitle = n + " (" + p + " AED)";
+        document.getElementById('dImg').src = img;
+        document.getElementById('dName').innerText = n;
+        document.getElementById('dPrice').innerText = p + " AED";
+        document.getElementById('dFab').innerText = fab;
+        document.getElementById('dWrk').innerText = wrk;
+        document.getElementById('dKam').innerText = kam;
+        document.getElementById('dOrn').innerText = orn;
+        document.getElementById('dSal').innerText = sal;
+        document.getElementById('detailsModal').style.display = "block";
     }
-    function closeModal() { document.getElementById('orderModal').style.display = "none"; }
 
-    function sendToWhatsApp() {
-        const name = document.getElementById('custName').value;
-        const phone = document.getElementById('custNumber').value;
-        const addr = document.getElementById('custAddress').value;
-        if(!name || !phone || !addr) return alert("Please fill all details!");
-        
-        const msg = `New Order - AKHON SHOP\n------------------\nProduct: ${orderDetails}\nCustomer: ${name}\nPhone: ${phone}\nAddress: ${addr}`;
+    function closeDetails() { document.getElementById('detailsModal').style.display = "none"; }
+    function openForm() { document.getElementById('orderModal').style.display = "block"; }
+    function closeForm() { document.getElementById('orderModal').style.display = "none"; }
+
+    function sendWhatsApp() {
+        const name = document.getElementById('cName').value;
+        const phone = document.getElementById('cPhone').value;
+        const addr = document.getElementById('cAddr').value;
+        if(!name || !phone || !addr) return alert("Please fill all information!");
+        const msg = `New Order from Website\n------------------\nProduct: ${orderTitle}\nCustomer: ${name}\nPhone: ${phone}\nAddress: ${addr}`;
         window.open(`https://wa.me/971503974296?text=${encodeURIComponent(msg)}`, '_blank');
-        closeModal();
     }
 </script>
 
+<div id="detailsModal">
+    <div class="close-btn" onclick="closeDetails()">✕</div>
+    <img id="dImg" class="det-img">
+    <div class="det-body">
+        <div id="dName" class="det-name"></div>
+        <div id="dPrice" class="det-price"></div>
+        
+        <div class="bio-box">
+            <h4 style="margin:0 0 10px 0; color:#f85606; border-bottom:1px solid #ddd; padding-bottom:5px;">Product Bio-Data</h4>
+            <div class="bio-row"><span>Fabric:</span> <span id="dFab"></span></div>
+            <div class="bio-row"><span>Work:</span> <span id="dWrk"></span></div>
+            <div class="bio-row"><span>Kameez:</span> <span id="dKam"></span></div>
+            <div class="bio-row"><span>Orna:</span> <span id="dOrn"></span></div>
+            <div class="bio-row"><span>Salwar:</span> <span id="dSal"></span></div>
+        </div>
+
+        <button class="order-btn" onclick="openForm()">BUY NOW</button>
+    </div>
+</div>
+
 <div id="orderModal">
-    <div class="modal-content">
-        <h3 id="modalProductName"></h3>
-        <input type="text" id="custName" placeholder="Your Full Name">
-        <input type="text" id="custNumber" placeholder="Mobile Number">
-        <textarea id="custAddress" placeholder="Full Delivery Address (City/Area)"></textarea>
-        <button class="confirm-btn" onclick="sendToWhatsApp()">Order on WhatsApp</button>
-        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+    <div class="form-box">
+        <h3 style="text-align:center; color:#f85606; margin-top:0;">Shipping Details</h3>
+        <input type="text" id="cName" placeholder="Full Name">
+        <input type="text" id="cPhone" placeholder="WhatsApp Number">
+        <textarea id="cAddr" placeholder="Delivery Address (City, Area)"></textarea>
+        <button class="order-btn" style="background:#25D366;" onclick="sendWhatsApp()">Confirm Order</button>
+        <button class="order-btn" style="background:#eee; color:#666; margin-top:10px;" onclick="closeForm()">Go Back</button>
     </div>
 </div>
 
