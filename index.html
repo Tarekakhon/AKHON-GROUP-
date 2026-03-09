@@ -1,102 +1,163 @@
-<div id="orderModal" style="display:none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); font-family: Arial, sans-serif;">
-    <div style="background-color: #fff; margin: 10% auto; padding: 20px; border-radius: 12px; width: 85%; max-width: 380px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-        <h3 id="modalProductName" style="text-align: center; color: #333; font-size: 18px; margin-bottom: 15px;"></h3>
-        <input type="text" id="custName" placeholder="আপনার নাম" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;">
-        <input type="text" id="custNumber" placeholder="মোবাইল নম্বর" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;">
-        <textarea id="custAddress" placeholder="পুরো ঠিকানা দিন" style="width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; height: 70px;"></textarea>
-        <button onclick="sendToWhatsApp()" style="background-color: #25D366; color: white; padding: 14px; border: none; width: 100%; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer;">WhatsApp-এ অর্ডার দিন</button>
-        <button onclick="closeOrderModal()" style="background-color: #777; color: white; padding: 10px; border: none; width: 100%; border-radius: 6px; cursor: pointer; margin-top: 8px;">বাতিল</button>
+<style>
+    .daraz-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+        background-color: #f4f4f4;
+        font-family: sans-serif;
+    }
+    .daraz-card {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    .discount-badge {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background: #f85606;
+        color: #fff;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 3px;
+        z-index: 1;
+    }
+    .daraz-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+    .info {
+        padding: 8px;
+        flex-grow: 1;
+    }
+    .title {
+        font-size: 12px;
+        color: #212121;
+        height: 32px;
+        overflow: hidden;
+        margin-bottom: 5px;
+    }
+    .price {
+        color: #f85606;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .old-price {
+        font-size: 10px;
+        color: #9e9e9e;
+        text-decoration: line-through;
+        margin-left: 4px;
+    }
+    .buy-btn {
+        background: #f85606;
+        color: #fff;
+        border: none;
+        width: 100%;
+        padding: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 12px;
+    }
+</style>
+
+<div class="daraz-container">
+    
+    <div class="daraz-card">
+        <div class="discount-badge">-40%</div>
+        <img src="01_23_09c7d9ef-d6f1-4fe0-bd17-36d1d4a89fce.jpg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ১</div>
+            <div class="price">120 AED <span class="old-price">200 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ১', '120 AED')">অর্ডার করুন</button>
+        </div>
     </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">-35%</div>
+        <img src="01_14_7f0d0c15-1ea6-436f-9004-f38be4fef7f1.jpg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ২</div>
+            <div class="price">130 AED <span class="old-price">210 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ২', '130 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">-30%</div>
+        <img src="01_21_a2924604-3633-4543-a00e-04a886819209.jpg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৩</div>
+            <div class="price">140 AED <span class="old-price">220 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ৩', '140 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">-25%</div>
+        <img src="images (12).jpeg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৪</div>
+            <div class="price">150 AED <span class="old-price">230 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ৪', '150 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">-20%</div>
+        <img src="Premium3PieceLawnSuit-PakistaniDress-Malbusaat1.jpeg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৫</div>
+            <div class="price">160 AED <span class="old-price">240 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ৫', '160 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">-15%</div>
+        <img src="safa-fashion-fab-1144-designer-3-piece-pakistani-suit-new-designs-2-2023-09-18_14_02_50.jpg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৬</div>
+            <div class="price">170 AED <span class="old-price">250 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ৬', '170 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">-10%</div>
+        <img src="laiba-am-vol-186-designer-pakistani-3-piece-suit-new-arrivals-0-2023-05-23_15_01_25.jpeg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৭</div>
+            <div class="price">180 AED <span class="old-price">260 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ৭', '180 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">OFFER</div>
+        <img src="product-jpeg.jpg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৮</div>
+            <div class="price">190 AED <span class="old-price">270 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ৮', '190 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
+    <div class="daraz-card">
+        <div class="discount-badge">HOT</div>
+        <img src="images (11).jpeg">
+        <div class="info">
+            <div class="title">পাকিস্তানি থ্রি পিস মডেল ৯</div>
+            <div class="price">200 AED <span class="old-price">280 AED</span></div>
+            <button class="buy-btn" onclick="openOrderModal('মডেল ৯', '200 AED')">অর্ডার করুন</button>
+        </div>
+    </div>
+
 </div>
 
-<section style="padding: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; background: #f4f4f4;">
-    
-    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <img src="images/01_23_09c7d9ef-d6f1-4fe0-bd17-36d1d4a89fce.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
-        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ১</h4>
-        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">120 AED</p>
-        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ১', '120 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
-    </div>
-
-    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <img src="images/01_14_7f0d0c15-1ea6-436f-9004-f38be4fef7f1.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
-        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ২</h4>
-        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">135 AED</p>
-        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ২', '135 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
-    </div>
-
-    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <img src="images/01_21_a2924604-3633-4543-a00e-04a886819209.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
-        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৩</h4>
-        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">150 AED</p>
-        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৩', '150 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
-    </div>
-
-    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <img src="images/images (12).jpeg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
-        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৪</h4>
-        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">165 AED</p>
-        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৪', '165 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
-    </div>
-
-    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <img src="images/Premium3PieceLawnSuit-PakistaniDress-Malbusaat1.jpeg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
-        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৫</h4>
-        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">180 AED</p>
-        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৫', '180 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
-    </div>
-
-    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <img src="images/safa-fashion-fab-1144-designer-3-piece-pakistani-suit-new-designs-2-2023-09-18_14_02_50.jpg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
-        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৬</h4>
-        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">190 AED</p>
-        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৬', '190 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
-    </div>
-
-    <div style="background: #fff; padding: 8px; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <img src="images/laiba-am-vol-186-designer-pakistani-3-piece-suit-new-arrivals-0-2023-05-23_15_01_25.jpeg" style="width: 100%; border-radius: 8px; height: 180px; object-fit: cover;">
-        <h4 style="font-size: 13px; margin: 8px 0;">পাকিস্তানি থ্রি-পিস মডেল ৭</h4>
-        <p style="color: #d35400; font-weight: bold; margin: 5px 0;">200 AED</p>
-        <button onclick="openOrderModal('পাকিস্তানি থ্রি-পিস মডেল ৭', '200 AED')" style="background: #d35400; color: #fff; border: none; padding: 8px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 12px;">অর্ডার করুন</button>
-    </div>
-
-</section>
-
-<script>
-    var currentProduct = "";
-    var currentPrice = "";
-
-    function openOrderModal(name, price) {
-        currentProduct = name;
-        currentPrice = price;
-        document.getElementById('modalProductName').innerText = name + " (" + price + ")";
-        document.getElementById('orderModal').style.display = "block";
-    }
-
-    function closeOrderModal() {
-        document.getElementById('orderModal').style.display = "none";
-    }
-
-    function sendToWhatsApp() {
-        var name = document.getElementById('custName').value;
-        var phone = document.getElementById('custNumber').value;
-        var address = document.getElementById('custAddress').value;
-        var whatsappNumber = "971503974296"; 
-
-        if(name == "" || phone == "" || address == "") {
-            alert("সব তথ্য পূরণ করুন!");
-            return;
-        }
-
-        var message = "নতুন অর্ডার - AKHON SHOP\n" +
-                      "------------------------\n" +
-                      "প্রোডাক্ট: " + currentProduct + "\n" +
-                      "দাম: " + currentPrice + "\n" +
-                      "কাস্টমার: " + name + "\n" +
-                      "মোবাইল: " + phone + "\n" +
-                      "ঠিকানা: " + address;
-
-        var url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
-        window.open(url, '_blank');
-    }
-</script>
